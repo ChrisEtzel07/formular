@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anfrage zur Krankenhausbehandlung | Klinik am Steigerwald</title>
     <style>
-        /* --- DESIGN SYSTEM (Auf Ihr Weinrot angepasst & Barrierefrei) --- */
+        /* --- DESIGN SYSTEM (Seniorengerecht & Barrierefrei) --- */
         :root {
-            --primary: #B5162B;        /* Ihr Marken-Weinrot */
-            --primary-hover: #8a1020;  /* Etwas dunkler für den Klick-Effekt */
-            --bg-color: #fcfafa;       /* Ganz leicht rötlich-warmer, weicher Hintergrund */
-            --text-color: #1a1a1a;     /* Hoher Kontrast für optimale Lesbarkeit */
-            --border-color: #767676;   /* Gut sichtbare Rahmenlinien */
+            --primary: #2e7d32;        /* Ein ruhiges, medizinisches Grün mit hohem Kontrast */
+            --primary-hover: #1b5e20;
+            --bg-color: #f4f6f4;
+            --text-color: #1a1a1a;     /* Fast Schwarz für perfekten Kontrast (WCAG AAA) */
+            --border-color: #767676;   /* Deutliche Rahmen für nachlassende Sehkraft */
             --error-color: #c62828;
-            --success-color: #4caf50;  /* Fortschritts-Grün für "Erfolgsmomente" */
+            --success-color: #43a047;
         }
 
         * {
@@ -25,7 +25,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            font-size: 20px; /* Große Basisschrift für Senioren */
+            font-size: 20px; /* Große Basisschrift für bessere Lesbarkeit */
             padding: 20px;
             margin: 0;
         }
@@ -36,46 +36,25 @@
             background: #ffffff;
             padding: 40px;
             border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(181, 22, 43, 0.08); /* Dezenter weinroter Schatten */
-            border-top: 8px solid var(--primary); /* Marken-Farbe als visueller Anker oben */
-        }
-
-        /* --- LOGO BEREICH --- */
-        .logo-wrapper {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .logo-wrapper img {
-            max-width: 280px; /* Optimale Größe, damit es auch auf Tablets gut wirkt */
-            height: auto;
-            display: inline-block;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         h1 {
-            font-size: 30px;
-            color: var(--text-color);
-            margin-top: 10px;
+            font-size: 32px;
+            color: var(--primary);
+            margin-top: 0;
             margin-bottom: 10px;
-            text-align: center;
         }
 
         .intro-text {
             font-size: 18px;
             color: #555;
             margin-bottom: 30px;
-            text-align: center;
         }
 
-        /* --- FORTSCHRITTSANZEIGE (Die grüne Erfolgsleiste) --- */
+        /* --- FORTSCHRITTSANZEIGE (Der grüne Balken) --- */
         .progress-container {
             margin-bottom: 35px;
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
         }
 
         .progress-text {
@@ -96,18 +75,18 @@
 
         .progress-bar-fill {
             height: 100%;
-            background-color: var(--success-color); /* Grün signalisiert Fortschritt & Erfolg */
-            width: 20%;
+            background-color: var(--success-color);
+            width: 20%; /* Start bei 20% (Schritt 1 von 5) */
             transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* --- SCHRITTE-LOGIK --- */
         .form-step {
-            display: none;
+            display: none; /* Versteckt alle Schritte standardmäßig */
         }
 
         .form-step.active {
-            display: block;
+            display: block; /* Zeigt nur den aktiven Schritt */
             animation: slideIn 0.3s ease-out;
         }
 
@@ -153,7 +132,7 @@
             padding: 16px;
             border: 2px solid var(--border-color);
             border-radius: 8px;
-            font-size: 20px;
+            font-size: 20px; /* Keine Verkleinerung beim Tippen */
             color: var(--text-color);
             background-color: #fff;
         }
@@ -163,7 +142,7 @@
             outline-offset: 1px;
         }
 
-        /* Große Radio-Buttons und Checkboxen */
+        /* Große Radio-Buttons und Checkboxen für zittrige Hände */
         .choice-label {
             display: flex;
             align-items: center;
@@ -177,7 +156,7 @@
         }
 
         .choice-label:hover {
-            background-color: #fdf8f8; /* Leichter weinroter Schimmer beim Überfahren */
+            background-color: #f9f9f9;
         }
 
         input[type="radio"],
@@ -187,7 +166,6 @@
             margin-right: 16px;
             flex-shrink: 0;
             cursor: pointer;
-            accent-color: var(--primary); /* Färbt den inneren Haken/Punkt weinrot */
         }
 
         /* --- BUTTONS (NAVIGATION) --- */
@@ -223,7 +201,7 @@
         .btn-next, .btn-submit {
             background-color: var(--primary);
             color: #ffffff;
-            flex-grow: 1;
+            flex-grow: 1; /* Macht den Hauptbutton größer und leichter zu treffen */
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
@@ -233,7 +211,7 @@
 
         /* --- DSGVO HIGHLIGHT BOX --- */
         .dsgvo-box {
-            background-color: #fdf2f3; /* Auf das Weinrot abgestimmter, zarter Hintergrund */
+            background-color: #e8f5e9;
             border-left: 6px solid var(--primary);
             padding: 20px;
             border-radius: 0 8px 8px 0;
@@ -256,11 +234,6 @@
 <body>
 
 <div class="container">
-    
-    <div class="logo-wrapper">
-        <img src="logo.jpg" alt="Klinik am Steigerwald Logo">
-    </div>
-
     <h1>Anfrage zur Aufnahme</h1>
     <p class="intro-text">Nehmen Sie sich Zeit. Wir begleiten Sie Schritt für Schritt durch das Formular.</p>
 
@@ -341,7 +314,7 @@
             <legend>3. Medizinische Gründe</legend>
             
             <div class="form-group">
-                <label for="hauptbeschwerden">Wegen welcher Hauptbeschwerden möchten Sie behandelt werden? *</label>
+                <label bit for="hauptbeschwerden">Wegen welcher Hauptbeschwerden möchten Sie behandelt werden? *</label>
                 <span class="helper-text">Z.B. chronische Schmerzen, Schlaflosigkeit, Magenprobleme...</span>
                 <textarea id="hauptbeschwerden" name="hauptbeschwerden" rows="5" required></textarea>
             </div>
@@ -379,6 +352,7 @@
                 <label>MRSA (Krankenhauskeime)</label>
                 <label class="choice-label">
                     <input type="checkbox" name="mrsa_kontakt" value="ja"> Ich hatte in den letzten Monaten Kontakt zu MRSA-Trägern
+                    <input type="checkbox" name="mrsa_kontakt" value="ja"> Test
                 </label>
             </div>
 
@@ -387,7 +361,7 @@
                 <label class="choice-label" style="border: none; padding: 0; background: transparent;">
                     <input type="checkbox" id="dsgvo_consent" name="dsgvo_consent" required>
                     <span style="font-size: 18px; line-height: 1.5;">
-                        Ich willige ausdrücklich ein, dass die Klinik am Steigerwald meine hier angegebenen <strong>medizinischen und persönlichen Daten</strong> zum Zweck der Prüfung einer Klinikaufnahme verarbeiten darf. Diese Einwilligung kann ich jederzeit mit Wirkung für die Zukunft widerrufen. Es gilt die <a href="https://www.tcmklinik.de/datenschutz" target="_blank" rel="noopener" style="color: var(--primary); font-weight: bold;">Datenschutzerklärung</a> der Klinik.
+                        Ich willige ausdrücklich ein, dass die Klinik am Steigerwald meine hier angegebenen <strong>medizinischen und persönlichen Daten</strong> zum Zweck der Prüfung einer Klinikaufnahme verarbeiten darf. Diese Einwilligung kann ich jederzeit mit Wirkung für die Zukunft widerrufen. Es gilt die <a href="https://www.tcmklinik.de/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a> der Klinik.
                     </span>
                 </label>
             </div>
@@ -416,6 +390,7 @@
         let currentStep = 0;
         const totalSteps = steps.length;
 
+        // Schritt-Namen für die Leiste
         const stepNames = [
             "Ihre Kontaktdaten",
             "Krankenkasse & Aufenthalt",
@@ -429,8 +404,11 @@
                 step.classList.toggle("active", index === stepIndex);
             });
 
+            // "Zurück"-Button einblenden (außer im 1. Schritt)
+            // Nutzen von visibility statt display verhindert, dass Layouts springen
             prevBtn.style.visibility = stepIndex > 0 ? "visible" : "hidden";
 
+            // Wechsel zwischen "Weiter" und "Absenden" im letzten Schritt
             if (stepIndex === totalSteps - 1) {
                 nextBtn.style.display = "none";
                 submitBtn.style.display = "inline-flex";
@@ -439,10 +417,12 @@
                 submitBtn.style.display = "none";
             }
 
+            // Fortschrittsbalken und Text aktualisieren
             const progressPercent = ((stepIndex + 1) / totalSteps) * 100;
             progressBar.style.width = `${progressPercent}%`;
             progressLabel.innerText = `Schritt ${stepIndex + 1} von ${totalSteps}: ${stepNames[stepIndex]}`;
             
+            // Fehleranzeige zurücksetzen beim Schrittwechsel
             errorSummary.style.display = "none";
         }
 
@@ -488,6 +468,7 @@
             }
         });
 
+        // Beim Tippen Fehlermarkierungen dynamisch entfernen
         form.addEventListener("input", (e) => {
             if (e.target.hasAttribute("required") && e.target.checkValidity()) {
                 e.target.style.borderColor = "var(--border-color)";
@@ -495,13 +476,16 @@
             }
         });
 
+        // Finales Absenden
         form.addEventListener("submit", (e) => {
             e.preventDefault();
             if (validateStep(currentStep)) {
+                // HIER kannst du deine GitHub/Backend Logik anbinden (z.B. Fetch-API)
                 alert("Erfolg! Ihre Anfrage wurde verschlüsselt übertragen. Unsere Aufnahmeärztin wird Sie kontaktieren.");
             }
         });
 
+        // Initialer Aufruf
         showStep(currentStep);
     });
 </script>
