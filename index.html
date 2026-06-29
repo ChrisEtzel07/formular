@@ -162,4 +162,332 @@
         input[type="radio"],
         input[type="checkbox"] {
             width: 28px;
-            height: 28px
+            height: 28px;
+            margin-right: 16px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        /* --- BUTTONS (NAVIGATION) --- */
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+
+        button {
+            padding: 18px 32px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-back {
+            background-color: #e0e0e0;
+            color: #333333;
+            min-width: 140px;
+        }
+
+        .btn-back:hover {
+            background-color: #d5d5d5;
+        }
+
+        .btn-next, .btn-submit {
+            background-color: var(--primary);
+            color: #ffffff;
+            flex-grow: 1; /* Macht den Hauptbutton größer und leichter zu treffen */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-next:hover, .btn-submit:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* --- DSGVO HIGHLIGHT BOX --- */
+        .dsgvo-box {
+            background-color: #e8f5e9;
+            border-left: 6px solid var(--primary);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 20px;
+        }
+
+        /* --- FEHLERANZEIGE --- */
+        .error-summary {
+            background-color: #ffebee;
+            border: 2px solid var(--error-color);
+            padding: 15px;
+            border-radius: 8px;
+            color: var(--error-color);
+            margin-bottom: 25px;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Anfrage zur Aufnahme</h1>
+    <p class="intro-text">Nehmen Sie sich Zeit. Wir begleiten Sie Schritt für Schritt durch das Formular.</p>
+
+    <div class="progress-container">
+        <span class="progress-text" id="progressLabel">Schritt 1 von 5: Ihre Kontaktdaten</span>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+    </div>
+
+    <div class="error-summary" id="errorSummary">
+        Bitte füllen Sie die rot markierten Pflichtfelder aus, um fortzufahren.
+    </div>
+
+    <form id="tcmKlinikForm" autocomplete="on">
+        
+        <div class="form-step active" data-step="1">
+            <legend>1. Wer stellt die Anfrage?</legend>
+            
+            <div class="form-group">
+                <label for="vorname">Vorname *</label>
+                <input type="text" id="vorname" name="vorname" required autocomplete="given-name">
+            </div>
+
+            <div class="form-group">
+                <label for="nachname">Nachname *</label>
+                <input type="text" id="nachname" name="nachname" required autocomplete="family-name">
+            </div>
+
+            <div class="form-group">
+                <label for="geburtsdatum">Geburtsdatum *</label>
+                <span class="helper-text">Beispiel: 14.05.1955</span>
+                <input type="date" id="geburtsdatum" name="geburtsdatum" required>
+            </div>
+
+            <div class="form-group">
+                <label for="telefon">Telefonnummer *</label>
+                <span class="helper-text">Für den kostenfreien Rückruf unserer Aufnahmeärztin</span>
+                <input type="tel" id="telefon" name="telefon" required autocomplete="tel">
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-Mail-Adresse *</label>
+                <input type="email" id="email" name="email" required autocomplete="email">
+            </div>
+        </div>
+
+        <div class="form-step" data-step="2">
+            <legend>2. Ihr Aufenthalt</legend>
+
+            <div class="form-group">
+                <label for="krankenkasse">Krankenkasse / Versicherung *</label>
+                <input type="text" id="krankenkasse" name="krankenkasse" required placeholder="z.B. Techniker Krankenkasse, AOK...">
+            </div>
+
+            <div class="form-group">
+                <label>Zimmerwunsch</label>
+                <label class="choice-label">
+                    <input type="radio" name="zimmer" value="einzelzimmer"> Einzelzimmer
+                </label>
+                <label class="choice-label">
+                    <input type="radio" name="zimmer" value="doppelzimmer" checked> Doppelzimmer
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>Benötigen Sie vor Ort Hilfsmittel?</label>
+                <label class="choice-label">
+                    <input type="checkbox" name="hilfsmittel" value="rollstuhl"> Ich benötige einen Rollstuhl
+                </label>
+                <label class="choice-label">
+                    <input type="checkbox" name="hilfsmittel" value="rollator"> Ich benötige einen Rollator
+                </label>
+            </div>
+        </div>
+
+        <div class="form-step" data-step="3">
+            <legend>3. Medizinische Gründe</legend>
+            
+            <div class="form-group">
+                <label bit for="hauptbeschwerden">Wegen welcher Hauptbeschwerden möchten Sie behandelt werden? *</label>
+                <span class="helper-text">Z.B. chronische Schmerzen, Schlaflosigkeit, Magenprobleme...</span>
+                <textarea id="hauptbeschwerden" name="hauptbeschwerden" rows="5" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="diagnosen">Bekannte Diagnosen von Ihrem Arzt</label>
+                <textarea id="diagnosen" name="diagnosen" rows="3" placeholder="Falls zur Hand, z.B. Arthrose, Migräne..."></textarea>
+            </div>
+        </div>
+
+        <div class="form-step" data-step="4">
+            <legend>4. Medikamente & Vorbehandlung</legend>
+
+            <div class="form-group">
+                <label for="medikamente">Welche Medikamente nehmen Sie aktuell ein?</label>
+                <span class="helper-text">Bitte listen Sie Name und Dosierung auf. Falls keine: Bitte "Keine" eintragen.</span>
+                <textarea id="medikamente" name="medikamente" rows="5"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Rauchen Sie?</label>
+                <label class="choice-label">
+                    <input type="radio" name="rauchen" value="nein" checked> Nein
+                </label>
+                <label class="choice-label">
+                    <input type="radio" name="rauchen" value="ja"> Ja
+                </label>
+            </div>
+        </div>
+
+        <div class="form-step" data-step="5">
+            <legend>5. Sicherheit & Datenschutz</legend>
+
+            <div class="form-group">
+                <label>MRSA (Krankenhauskeime)</label>
+                <label class="choice-label">
+                    <input type="checkbox" name="mrsa_kontakt" value="ja"> Ich hatte in den letzten Monaten Kontakt zu MRSA-Trägern
+                </label>
+            </div>
+
+            <div class="dsgvo-box">
+                <label style="color: var(--primary); margin-bottom: 12px;">Datenschutz-Einwilligung *</label>
+                <label class="choice-label" style="border: none; padding: 0; background: transparent;">
+                    <input type="checkbox" id="dsgvo_consent" name="dsgvo_consent" required>
+                    <span style="font-size: 18px; line-height: 1.5;">
+                        Ich willige ausdrücklich ein, dass die Klinik am Steigerwald meine hier angegebenen <strong>medizinischen und persönlichen Daten</strong> zum Zweck der Prüfung einer Klinikaufnahme verarbeiten darf. Diese Einwilligung kann ich jederzeit mit Wirkung für die Zukunft widerrufen. Es gilt die <a href="https://www.tcmklinik.de/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a> der Klinik.
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <div class="button-row">
+            <button type="button" class="btn-back" id="prevBtn" style="visibility: hidden;">‹ Zurück</button>
+            <button type="button" class="btn-next" id="nextBtn">Weiter ›</button>
+            <button type="submit" class="btn-submit" id="submitBtn" style="display: none;">Anfrage jetzt sicher absenden</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const steps = document.querySelectorAll(".form-step");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const submitBtn = document.getElementById("submitBtn");
+        const progressBar = document.getElementById("progressBar");
+        const progressLabel = document.getElementById("progressLabel");
+        const errorSummary = document.getElementById("errorSummary");
+        const form = document.getElementById("tcmKlinikForm");
+
+        let currentStep = 0;
+        const totalSteps = steps.length;
+
+        // Schritt-Namen für die Leiste
+        const stepNames = [
+            "Ihre Kontaktdaten",
+            "Krankenkasse & Aufenthalt",
+            "Ihre Beschwerden",
+            "Medikamente & Historie",
+            "Abschluss & Datenschutz"
+        ];
+
+        function showStep(stepIndex) {
+            steps.forEach((step, index) => {
+                step.classList.toggle("active", index === stepIndex);
+            });
+
+            // "Zurück"-Button einblenden (außer im 1. Schritt)
+            // Nutzen von visibility statt display verhindert, dass Layouts springen
+            prevBtn.style.visibility = stepIndex > 0 ? "visible" : "hidden";
+
+            // Wechsel zwischen "Weiter" und "Absenden" im letzten Schritt
+            if (stepIndex === totalSteps - 1) {
+                nextBtn.style.display = "none";
+                submitBtn.style.display = "inline-flex";
+            } else {
+                nextBtn.style.display = "inline-flex";
+                submitBtn.style.display = "none";
+            }
+
+            // Fortschrittsbalken und Text aktualisieren
+            const progressPercent = ((stepIndex + 1) / totalSteps) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+            progressLabel.innerText = `Schritt ${stepIndex + 1} von ${totalSteps}: ${stepNames[stepIndex]}`;
+            
+            // Fehleranzeige zurücksetzen beim Schrittwechsel
+            errorSummary.style.display = "none";
+        }
+
+        function validateStep(stepIndex) {
+            const activeStep = steps[stepIndex];
+            const requiredFields = activeStep.querySelectorAll("[required]");
+            let allValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.checkValidity()) {
+                    allValid = false;
+                    field.style.borderColor = "var(--error-color)";
+                    field.style.backgroundColor = "#fff8f8";
+                } else {
+                    field.style.borderColor = "var(--border-color)";
+                    field.style.backgroundColor = "#fff";
+                }
+            });
+
+            if (!allValid) {
+                errorSummary.style.display = "block";
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            return allValid;
+        }
+
+        nextBtn.addEventListener("click", () => {
+            if (validateStep(currentStep)) {
+                if (currentStep < totalSteps - 1) {
+                    currentStep++;
+                    showStep(currentStep);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+        });
+
+        prevBtn.addEventListener("click", () => {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        // Beim Tippen Fehlermarkierungen dynamisch entfernen
+        form.addEventListener("input", (e) => {
+            if (e.target.hasAttribute("required") && e.target.checkValidity()) {
+                e.target.style.borderColor = "var(--border-color)";
+                e.target.style.backgroundColor = "#fff";
+            }
+        });
+
+        // Finales Absenden
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            if (validateStep(currentStep)) {
+                // HIER kannst du deine GitHub/Backend Logik anbinden (z.B. Fetch-API)
+                alert("Erfolg! Ihre Anfrage wurde verschlüsselt übertragen. Unsere Aufnahmeärztin wird Sie kontaktieren.");
+            }
+        });
+
+        // Initialer Aufruf
+        showStep(currentStep);
+    });
+</script>
+
+</body>
+</html>
