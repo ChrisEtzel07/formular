@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anfrage zur Krankenhausbehandlung | Klinik am Steigerwald</title>
     <style>
-        /* --- DESIGN SYSTEM (Auf Ihr Weinrot angepasst & Barrierefrei) --- */
+        /* --- DESIGN SYSTEM --- */
         :root {
-            --primary: #B5162B;        /* Ihr Marken-Weinrot */
-            --primary-hover: #8a1020;  /* Etwas dunkler für den Klick-Effekt */
-            --bg-color: #fcfafa;       /* Ganz leicht rötlich-warmer, weicher Hintergrund */
-            --text-color: #1a1a1a;     /* Hoher Kontrast für optimale Lesbarkeit */
-            --border-color: #767676;   /* Gut sichtbare Rahmenlinien */
+            --primary: #B5162B;        
+            --primary-hover: #8a1020;  
+            --bg-color: #fcfafa;       
+            --text-color: #1a1a1a;     
+            --border-color: #767676;   
             --error-color: #c62828;
-            --success-color: #4caf50;  /* Fortschritts-Grün für "Erfolgsmomente" */
+            --success-color: #4caf50;  
         }
 
         * {
@@ -25,12 +25,11 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            font-size: 20px; /* Große Basisschrift für Senioren */
+            font-size: 20px; 
             padding: 20px;
             margin: 0;
         }
 
-        /* NEU: Maximale Breite erhöht, damit beide Spalten sehr groß nebeneinander passen */
         .container {
             max-width: 1400px; 
             margin: 40px auto;
@@ -41,14 +40,13 @@
             border-top: 8px solid var(--primary);
         }
 
-        /* --- GROSSES NEBENEINANDER-LAYOUT (50% Formular / 50% Video) --- */
+        /* --- SIDE-BY-SIDE LAYOUT (50% Formular / 50% Video) --- */
         .main-layout-wrapper {
             display: flex;
             gap: 50px;
             align-items: flex-start;
         }
 
-        /* Beide Spalten teilen sich den Platz gleichmäßig auf */
         .form-content-side {
             flex: 1;
             min-width: 0;
@@ -59,7 +57,6 @@
             min-width: 0;
         }
 
-        /* Das Video bleibt rechts fixiert und wandert beim Scrollen mit */
         .video-sticky-box {
             position: sticky;
             top: 20px;
@@ -98,7 +95,7 @@
             height: auto;
         }
 
-        /* --- LOGO BEREICH --- */
+        /* --- LOGO & STRUKTUR --- */
         .logo-wrapper {
             text-align: center;
             margin-bottom: 30px;
@@ -127,7 +124,6 @@
             text-align: center;
         }
 
-        /* --- FORTSCHRITTSANZEIGE --- */
         .progress-container {
             margin-bottom: 35px;
             background: #f9f9f9;
@@ -159,7 +155,6 @@
             transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- SCHRITTE-LOGIK & SPALTEN --- */
         .form-step {
             display: none;
         }
@@ -174,31 +169,19 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Spalten-Eingaben für die Zeilenlisten */
         .form-row {
             display: flex;
-            gap: 20px;
-            margin-bottom: 0;
-            align-items: stretch;
+            gap: 15px;
+            margin-bottom: 12px;
         }
 
-        .form-row .col {
+        .form-row .col-main {
+            flex: 2;
+        }
+
+        .form-row .col-side {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-row .col-short {
-            flex: 0 0 35%;
-        }
-
-        .form-row .col textarea,
-        .form-row .col input,
-        .form-row .col .choice-label {
-            margin-top: auto;
-        }
-
-        .form-row .col .choice-label {
-            margin-bottom: 0;
         }
 
         legend {
@@ -209,7 +192,6 @@
             padding: 0;
         }
 
-        /* --- FORMULARELEMENTE --- */
         .form-group {
             margin-bottom: 28px;
         }
@@ -225,10 +207,16 @@
         .topic-title {
             font-size: 20px;
             font-weight: bold;
-            color: var(--text-color);
+            color: var(--primary);
             margin-top: 0;
-            margin-bottom: 14px;
-            line-height: 1.4;
+            margin-bottom: 6px;
+        }
+
+        .topic-subtitle {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 16px;
+            display: block;
         }
 
         label {
@@ -249,10 +237,9 @@
         input[type="email"],
         input[type="tel"],
         input[type="date"],
-        textarea,
-        select {
+        textarea {
             width: 100%;
-            padding: 16px;
+            padding: 12px 16px;
             border: 2px solid var(--border-color);
             border-radius: 8px;
             font-size: 20px;
@@ -260,7 +247,13 @@
             background-color: #fff;
         }
 
-        input:focus, textarea:focus, select:focus {
+        /* Spezifische flachere Inputs für die Tabellen-Listen */
+        .list-input {
+            padding: 10px 14px !important;
+            font-size: 19px !important;
+        }
+
+        input:focus, textarea:focus {
             outline: 3px solid var(--primary);
             outline-offset: 1px;
         }
@@ -274,16 +267,11 @@
             margin-bottom: 12px;
             cursor: pointer;
             font-weight: normal;
-            transition: background 0.2s;
             background-color: #ffffff;
         }
 
         .choice-label:hover {
             background-color: #fdf8f8;
-        }
-
-        .choice-label:last-child {
-            margin-bottom: 0;
         }
 
         input[type="radio"],
@@ -292,11 +280,10 @@
             height: 28px;
             margin-right: 16px;
             flex-shrink: 0;
-            cursor: pointer;
             accent-color: var(--primary);
         }
 
-        /* --- NAVIGATION --- */
+        /* --- NAVIGATION BUTTONS --- */
         .button-row {
             display: flex;
             justify-content: space-between;
@@ -322,15 +309,10 @@
             min-width: 140px;
         }
 
-        .btn-back:hover {
-            background-color: #d5d5d5;
-        }
-
         .btn-next, .btn-submit {
             background-color: var(--primary);
             color: #ffffff;
             flex-grow: 1;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .btn-next:hover, .btn-submit:hover {
@@ -356,33 +338,16 @@
             display: none;
         }
 
-        /* RESPONSIVE DESIGN: Auf Tablets und Smartphones untereinander stapeln */
         @media (max-width: 1024px) {
             .main-layout-wrapper {
-                flex-direction: column-reverse; /* Video rutscht nach oben */
+                flex-direction: column-reverse;
                 gap: 35px;
             }
             .video-sidebar {
                 width: 100%;
-                flex: none;
             }
             .video-sticky-box {
-                position: static; /* Sticky auf kleinen Displays deaktivieren */
-            }
-        }
-
-        @media (max-width: 600px) {
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-            .form-row .col-short {
-                flex: 1;
-            }
-            .form-row .col textarea,
-            .form-row .col input,
-            .form-row .col .choice-label {
-                margin-top: 0;
+                position: static;
             }
         }
     </style>
@@ -419,18 +384,17 @@
                     <legend>1. Wer stellt die Anfrage?</legend>
                     
                     <div class="form-row">
-                        <div class="form-group col">
+                        <div style="flex: 1;">
                             <label for="vorname">Vorname *</label>
                             <input type="text" id="vorname" name="vorname" required autocomplete="given-name">
                         </div>
-
-                        <div class="form-group col">
+                        <div style="flex: 1;">
                             <label for="nachname">Nachname *</label>
                             <input type="text" id="nachname" name="nachname" required autocomplete="family-name">
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" style="margin-top: 15px;">
                         <label for="geburtsdatum">Geburtsdatum *</label>
                         <span class="helper-text">Beispiel: 14.05.1955</span>
                         <input type="date" id="geburtsdatum" name="geburtsdatum" required>
@@ -440,6 +404,12 @@
                         <label for="telefon">Telefonnummer *</label>
                         <span class="helper-text">Für den kostenfreien Rückruf unserer Aufnahmeärztin</span>
                         <input type="tel" id="telefon" name="telefon" required autocomplete="tel">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="erreichbarkeit">Wann sind Sie telefonisch am besten erreichbar? *</label>
+                        <span class="helper-text">Z.B. "Vormittags", "Nachmittags ab 15 Uhr", "Jederzeit"...</span>
+                        <input type="text" id="erreichbarkeit" name="erreichbarkeit" required placeholder="Ihre bevorzugte Uhrzeit">
                     </div>
 
                     <div class="form-group">
@@ -483,22 +453,53 @@
                 <div class="form-step" data-step="3">
                     <legend>3. Medizinische Gründe</legend>
                     
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="hauptbeschwerden">Ich habe folgende Diagnose/n *</label>
-                            <span class="helper-text">Z.B. chronische Schmerzen, Schlaflosigkeit, Magenprobleme...</span>
-                            <textarea id="hauptbeschwerden" name="hauptbeschwerden" rows="5" required></textarea>
+                    <div class="topic-section">
+                        <p class="topic-title">Ich möchte mich vor allem wegen folgender Beschwerden behandeln lassen:</p>
+                        <span class="topic-subtitle">(z.B. Schwindel, Schmerzen, Schlaflosigkeit, Nahrungsmittelunverträglichkeit...)</span>
+                        
+                        <div class="form-row" style="font-weight: bold; font-size: 16px; color: var(--primary); margin-bottom: 5px;">
+                            <div class="col-main">Beschwerden</div>
+                            <div class="col-side">seit</div>
                         </div>
 
-                        <div class="form-group col col-short">
-                            <label for="hauptbeschwerden_seit">seit: *</label>
-                            <textarea id="hauptbeschwerden_seit" name="hauptbeschwerden_seit" rows="5" placeholder="Z.B. 3 Monaten..." required></textarea>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_1" required placeholder="Hauptbeschwerde *"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_1_seit" required placeholder="z.B. 3 Monaten *"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_2"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_2_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_3"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_3_seit"></div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="diagnosen">Bekannte Diagnosen von Ihrem Arzt</label>
-                        <textarea id="diagnosen" name="diagnosen" rows="3" placeholder="Falls zur Hand, z.B. Arthrose, Migräne..."></textarea>
+                    <div class="topic-section">
+                        <p class="topic-title">Weitere Beschwerden</p>
+                        
+                        <div class="form-row" style="font-weight: bold; font-size: 16px; color: var(--primary); margin-bottom: 5px;">
+                            <div class="col-main">Weitere Beschwerden</div>
+                            <div class="col-side">seit</div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="weitere_beschwerde_1"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="weitere_beschwerde_1_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="weitere_beschwerde_2"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="weitere_beschwerde_2_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="weitere_beschwerde_3"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="weitere_beschwerde_3_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="weitere_beschwerde_4"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="weitere_beschwerde_4_seit"></div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -511,41 +512,64 @@
                 <div class="form-step" data-step="4">
                     <legend>4. Medikamente & Vorbehandlung</legend>
 
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="medikamente">Welche Medikamente nehmen Sie aktuell ein?</label>
-                            <span class="helper-text">Bitte listen Sie Name und Dosierung auf. Falls keine: "Keine".</span>
-                            <textarea id="medikamente" name="medikamente" rows="5"></textarea>
+                    <div class="topic-section">
+                        <p class="topic-title">Ich nehme folgende Medikamente:</p>
+                        <span class="topic-subtitle">(z.B. Hormone, Abführmittel, Blutdrucksenker... Falls keine: "Keine" in erste Zeile schreiben)</span>
+                        
+                        <div class="form-row" style="font-weight: bold; font-size: 16px; color: var(--primary); margin-bottom: 5px;">
+                            <div class="col-main">Medikament (Name und Dosierung)</div>
+                            <div class="col-side">seit</div>
                         </div>
 
-                        <div class="form-group col col-short">
-                            <label for="medikamente_seit">seit:</label>
-                            <textarea id="medikamente_seit" name="medikamente_seit" rows="5" placeholder="Z.B. 3 Monaten..."></textarea>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_1" placeholder="z.B. Ramipril 5mg"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_1_seit" placeholder="z.B. 2021"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_2"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_2_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_3"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_3_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_4"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_4_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_5"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_5_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_6"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_6_seit"></div>
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="vorbehandlungen">Bisherige stationäre Aufenthalte, Operationen, Therapien</label>
-                            <span class="helper-text">Bitte listen Sie diese kurz auf. Falls keine: "Keine".</span>
-                            <textarea id="vorbehandlungen" name="vorbehandlungen" rows="5"></textarea>
+                    <div class="topic-section">
+                        <p class="topic-title">Bisherige stationäre Aufenthalte, Operationen, Therapien</p>
+                        
+                        <div class="form-row">
+                            <div class="col-main">
+                                <label style="font-size: 16px; margin-bottom: 5px;">Kurze Auflistung:</label>
+                                <textarea id="vorbehandlungen" name="vorbehandlungen" rows="4" placeholder="Falls keine: 'Keine'"></textarea>
+                            </div>
+                            <div class="col-side">
+                                <label style="font-size: 16px; margin-bottom: 5px;">Zeitraum:</label>
+                                <textarea id="vorbehandlungen_zeitraum" name="vorbehandlungen_zeitraum" rows="4" placeholder="z.B. 2022-2024"></textarea>
+                            </div>
                         </div>
 
-                        <div class="form-group col col-short">
-                            <label for="vorbehandlungen_zeitraum">Zeitraum:</label>
-                            <textarea id="vorbehandlungen_zeitraum" name="vorbehandlungen_zeitraum" rows="5" placeholder="Z.B. 2022-2024"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label class="choice-label" style="width: 100%;">
-                                <input type="checkbox" name="intensivstation" value="ja"> davon Intensivstation
-                            </label>
-                        </div>
-                        <div class="form-group col col-short">
-                            <label for="intensiv_zeitraum">Zeitraum/Dauer:</label>
-                            <textarea id="intensiv_zeitraum" name="intensiv_zeitraum" rows="2" placeholder="Z.B. 3 Tage"></textarea>
+                        <div class="form-row" style="margin-top: 15px; align-items: center;">
+                            <div class="col-main">
+                                <label class="choice-label" style="margin-bottom: 0;">
+                                    <input type="checkbox" name="intensivstation" value="ja"> davon Intensivstation
+                                </label>
+                            </div>
+                            <div class="col-side">
+                                <input type="text" class="list-input" name="intensiv_zeitraum" placeholder="Zeitraum/Dauer (z.B. 3 Tage)">
+                            </div>
                         </div>
                     </div>
 
@@ -564,62 +588,16 @@
                     <legend>5. Sicherheit & Datenschutz</legend>
 
                     <div class="topic-section">
-                        <p class="topic-title">Vorsorgliche Sicherheitsfragen (MRSA-Schutz)</p>
-                        <span class="helper-text" style="margin-bottom: 15px;">Um das Risiko von Infektionen mit multiresistenten Keimen (MRSA) im Krankenhaus zu verringern, bitten wir Sie folgende Fragen zu beantworten:</span>
+                        <p class="topic-title" style="color: var(--text-color);">Vorsorgliche Sicherheitsfragen (MRSA-Schutz)</p>
+                        <span class="helper-text" style="margin-bottom: 15px;">Um das Risiko von Infektionen im Krankenhaus zu verringern, bitten wir Sie um Beantwortung:</span>
                         
-                        <label class="choice-label">
-                            <input type="checkbox" name="mrsa_risiko[]" value="mrsa_kontakt"> Ich hatte in den letzten Monaten Kontakt zu MRSA-Trägern
-                        </label>
-                        <label class="choice-label">
-                            <input type="checkbox" name="mrsa_risiko[]" value="dialyse"> dialysepflichtig
-                        </label>
-                        <label class="choice-label">
-                            <input type="checkbox" name="mrsa_risiko[]" value="dialyse_katheter"> dialysepflichtig mit Katheter
-                        </label>
-                        <label class="choice-label">
-                            <input type="checkbox" name="mrsa_risiko[]" value="brandverletzung"> Brandverletzung
-                        </label>
-                        <label class="choice-label">
-                            <input type="checkbox" name="mrsa_risiko[]" value="offene_wunde"> offene Wunde, chronisch
-                        </label>
-                        <label class="choice-label">
-                            <input type="checkbox" name="mrsa_risiko[]" value="schweinemast"> Arbeit im Schweinemastbetrieb
-                        </label>
-                        <label class="choice-label">
-                            <input type="checkbox" name="mrsa_risiko[]" value="katheter_sonde"> Luftröhren-Kanüle (Tracheostoma), Magensonde(PEG-Anlage), Port, Katheter o.ä.
-                        </label>
-                    </div>
-
-                    <div class="topic-section">
-                        <p class="topic-title">Wie sind Sie auf unsere Klinik aufmerksam geworden?</p>
-                        
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="freunde"> Freunde / Bekannte
-                        </label> 
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="arzt"> Empfehlung vom Arzt / Therapeuten
-                        </label> 
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="infotag"> Patienteninformationstag
-                        </label> 
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="zeitung"> Zeitungen und Zeitschriften
-                        </label> 
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="tv_radio"> Fernsehen / Radio 
-                        </label> 
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="internet"> Internetsuche
-                        </label>
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="facebook"> Facebook
-                        </label>
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="instagram"> Instagram
-                        </label>
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="sonstiges"> Sonstiges
-                        </label>
+                        <label class="choice-label"><input type="checkbox" name="mrsa_risiko[]" value="mrsa_kontakt"> Ich hatte Kontakt zu MRSA-Trägern</label>
+                        <label class="choice-label"><input type="checkbox" name="mrsa_risiko[]" value="dialyse"> dialysepflichtig</label>
+                        <label class="choice-label"><input type="checkbox" name="mrsa_risiko[]" value="dialyse_katheter"> dialysepflichtig mit Katheter</label>
+                        <label class="choice-label"><input type="checkbox" name="mrsa_risiko[]" value="brandverletzung"> Brandverletzung</label>
+                        <label class="choice-label"><input type="checkbox" name="mrsa_risiko[]" value="offene_wunde"> offene Wunde, chronisch</label>
+                        <label class="choice-label"><input type="checkbox" name="mrsa_risiko[]" value="schweinemast"> Arbeit im Schweinemastbetrieb</label>
+                        <label class="choice-label"><input type="checkbox" name="mrsa_risiko[]" value="katheter_sonde"> Luftröhren-Kanüle, Magensonde (PEG), Port, Katheter o.ä.</label>
                     </div>
 
                     <div class="dsgvo-box">
@@ -627,7 +605,7 @@
                         <label class="choice-label" style="border: none; padding: 0; background: transparent;">
                             <input type="checkbox" id="dsgvo_consent" name="dsgvo_consent" required>
                             <span style="font-size: 18px; line-height: 1.5;">
-                                Ich willige ausdrücklich ein, dass die Klinik am Steigerwald meine hier angegebenen <strong>medizinischen und persönlichen Daten</strong> zum Zweck der Prüfung einer Klinikaufnahme verarbeiten darf. Diese Einwilligung kann ich jederzeit mit Wirkung für die Zukunft widerrufen. Es gilt die <a href="https://www.tcmklinik.de/datenschutz" target="_blank" rel="noopener" style="color: var(--primary); font-weight: bold;">Datenschutzerklärung</a> der Klinik.
+                                Ich willige ausdrücklich ein, dass die Klinik am Steigerwald meine hier angegebenen <strong>medizinischen Daten</strong> zum Zweck der Prüfung einer Klinikaufnahme verarbeiten darf. Es gilt die <a href="https://www.tcmklinik.de/datenschutz" target="_blank" rel="noopener" style="color: var(--primary); font-weight: bold;">Datenschutzerklärung</a>.
                             </span>
                         </label>
                     </div>
@@ -656,7 +634,8 @@
             </div>
         </div>
 
-    </div> </div>
+    </div> 
+</div>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -754,7 +733,7 @@
         form.addEventListener("submit", (e) => {
             e.preventDefault();
             if (validateStep(currentStep)) {
-                alert("Erfolg! Ihre Anfrage wurde verschlüsselt übertragen. Unsere Aufnahmeärztin wird Sie zeitnah kontaktieren.");
+                alert("Erfolg! Ihre Anfrage wurde verschlüsselt übertragen.");
             }
         });
 
