@@ -31,7 +31,7 @@
         }
 
         .container {
-            max-width: 1400px; 
+            max-width: 1440px; 
             margin: 40px auto;
             background: #ffffff;
             padding: 40px;
@@ -40,20 +40,19 @@
             border-top: 8px solid var(--primary);
         }
 
-        /* --- SIDE-BY-SIDE LAYOUT (Formular / Video) --- */
+        /* --- HAUPTLAYOUT: MEHR PLATZ FÜRS FORMULAR (65% / 35%) --- */
         .main-layout-wrapper {
-            display: flex;
-            gap: 50px;
+            display: grid;
+            grid-template-columns: 1.8fr 1fr; /* Gibt dem Formular deutlich mehr horizontalen Raum */
+            gap: 40px;
             align-items: flex-start;
         }
 
         .form-content-side {
-            flex: 1;
-            min-width: 0;
+            min-width: 0; /* Verhindert, dass das Formular das Grid sprengt */
         }
 
         .video-sidebar {
-            flex: 1;
             min-width: 0;
         }
 
@@ -141,7 +140,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- STANDARD REIHEN (Für Diagnosen-Tabellen) --- */
+        /* --- STANDARD-REIHEN (Eingabelisten) --- */
         .form-row {
             display: flex;
             gap: 15px;
@@ -156,10 +155,10 @@
             flex: 1;
         }
 
-        /* --- BOMBENFESTES GRID FÜR NEBENEINANDER-TEXTAREAS --- */
+        /* --- UNZERSTÖRBARES GRID FÜR NEBENEINANDER-TEXTAREAS (Schritt 4) --- */
         .grid-textarea-row {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* 50% und 50% exakt aufgeteilt */
+            grid-template-columns: repeat(2, minmax(0, 1fr)); /* Erzwingt exakt mathematische 50% pro Spalte */
             gap: 20px;
             width: 100%;
         }
@@ -167,7 +166,8 @@
         .grid-textarea-col {
             display: flex;
             flex-direction: column;
-            min-width: 0; /* Zwingt den Inhalt, sich an die Spaltenbreite anzupassen */
+            width: 100%;
+            min-width: 0; /* Verhindert das Ausbrechen von Textareas */
         }
 
         .grid-textarea-col label {
@@ -225,7 +225,7 @@
             display: block;
         }
 
-        /* Maximale Sicherheit für Inputs und Textareas gegen Layout-Sprengung */
+        /* Absolute Breitenkontrolle gegen Layout-Sprengung */
         input[type="text"],
         input[type="email"],
         input[type="tel"],
@@ -332,9 +332,9 @@
             display: none;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1100px) {
             .main-layout-wrapper {
-                flex-direction: column-reverse;
+                grid-template-columns: 1fr;
                 gap: 35px;
             }
             .video-sidebar {
@@ -343,6 +343,9 @@
             .video-sticky-box {
                 position: static;
             }
+        }
+
+        @media (max-width: 768px) {
             .grid-textarea-row {
                 grid-template-columns: 1fr;
                 gap: 15px;
