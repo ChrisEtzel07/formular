@@ -49,6 +49,8 @@
         gap: 40px;
         /* CRITICAL FÜR STICKY: Zwingt die Videospalte, sich nicht unendlich langzustrecken */
         align-items: flex-start; 
+        /* Mindesthöhe garantiert, dass das Video auch bei kurzen Schritten (z.B. Schritt 1) scrollen kann */
+        min-height: 750px; 
     }
 
     .form-content-side {
@@ -61,6 +63,7 @@
 
     /* Der fixierte Container beim Scrollen */
     .video-sticky-box {
+        position: -webkit-sticky; /* Safari Support */
         position: sticky;
         top: 30px; /* Abstand zum oberen Bildschirmrand beim Scrollen */
         background: #f9f9f9;
@@ -68,6 +71,7 @@
         border-radius: 12px;
         border: 1px solid #e0e0e0;
         box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        will-change: transform; /* Hardware-Beschleunigung für flüssiges Scrollen */
     }
 
     .video-sticky-box h3 {
@@ -340,11 +344,12 @@
         display: none;
     }
 
-    /* DEAKTIVIERT STICKY AUF MOBILGERÄTEN KORREKT (Änderung von Flex zu Grid-Spalte) */
+    /* DEAKTIVIERT STICKY AUF MOBILGERÄTEN KORREKT */
     @media (max-width: 1150px) {
         .main-layout-wrapper {
             grid-template-columns: 1fr; /* Wechselt stabil auf Einspaltigkeit untereinander */
             gap: 35px;
+            min-height: auto;
         }
         .video-sidebar {
             width: 100%;
@@ -459,7 +464,7 @@
 
                     <div class="topic-section">
                         <p class="topic-title">Ich habe folgende Diagnose/n *</p>
-                        <span class="topic-subtitle">Falls forhanden</span>
+                        <span class="topic-subtitle">Falls vorhanden</span>
                         
                         <div class="form-row" style="font-weight: bold; font-size: 16px; color: var(--primary); margin-bottom: 5px;">
                             <div class="col-main">Diagnose</div>
@@ -467,20 +472,20 @@
                         </div>
 
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_1" required placeholder="Diagnose *"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_1_seit" required placeholder="z.B. 3 Monaten *"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="diagnose_1" required placeholder="Diagnose *"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="diagnose_1_seit" required placeholder="z.B. 3 Monaten *"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_2"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_2_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="diagnose_2"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="diagnose_2_seit"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_3"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_3_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="diagnose_3"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="diagnose_3_seit"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_4"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_4_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="diagnose_4"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="diagnose_4_seit"></div>
                         </div>
                     </div>
                     
@@ -688,18 +693,18 @@
         </div>
 
         <div class="video-sidebar">
-    <div class="video-sticky-box">
-        <h3>Video-Anleitung zum Ausfüllen</h3>
-        <p class="video-help-text">In dieser Bildschirmaufnahme führt Sie unsere Aufnahmeärztin Schritt für Schritt durch das Formular.</p>
-        
-        <div class="video-responsive-container">
-            <video controls width="100%">
-                <source src="anleitung.mp4" type="video/mp4">
-                Ihr Browser unterstützt keine Videos.
-            </video>
+            <div class="video-sticky-box">
+                <h3>Video-Anleitung zum Ausfüllen</h3>
+                <p class="video-help-text">In dieser Bildschirmaufnahme führt Sie unsere Aufnahmeärztin Schritt für Schritt durch das Formular.</p>
+                
+                <div class="video-responsive-container">
+                    <video controls width="100%">
+                        <source src="anleitung.mp4" type="video/mp4">
+                        Ihr Browser unterstützt keine Videos.
+                    </video>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
     </div> 
 </div>
