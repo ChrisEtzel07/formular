@@ -454,6 +454,32 @@
                     <legend>3. Medizinische Gründe</legend>
                     
                     <div class="topic-section">
+                        <p class="topic-title">Ich habe folgende Diagnose/n:</p>
+                        
+                        <div class="form-row" style="font-weight: bold; font-size: 16px; color: var(--primary); margin-bottom: 5px;">
+                            <div class="col-main">Diagnosen</div>
+                            <div class="col-side">seit</div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="diagnose_1" placeholder="Diagnose 1"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="diagnose_1_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="diagnose_2"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="diagnose_2_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="diagnose_3"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="diagnose_3_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="diagnose_4"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="diagnose_4_seit"></div>
+                        </div>
+                    </div>
+
+                    <div class="topic-section">
                         <p class="topic-title">Ich möchte mich vor allem wegen folgender Beschwerden behandeln lassen:</p>
                         <span class="topic-subtitle">(z.B. Schwindel, Schmerzen, Schlaflosigkeit, Nahrungsmittelunverträglichkeit...)</span>
                         
@@ -517,62 +543,43 @@
                     <legend>4. Medikamente & Vorbehandlung</legend>
 
                     <div class="topic-section">
-                        <p class="topic-title">Ich nehme folgende Medikamente:</p>
-                        <span class="topic-subtitle">(z.B. Hormone, Abführmittel, Blutdrucksenker... Falls keine: "Keine" in erste Zeile schreiben)</span>
+                        <p class="topic-title">Welche Medikamente nehmen Sie aktuell ein?</p>
+                        <span class="topic-subtitle">Bitte listen Sie Name und Dosierung auf. Falls keine: "Keine".</span>
                         
-                        <div class="form-row" style="font-weight: bold; font-size: 16px; color: var(--primary); margin-bottom: 5px;">
-                            <div class="col-main">Medikament (Name und Dosierung)</div>
-                            <div class="col-side">seit</div>
-                        </div>
-
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="medikament_1" placeholder="z.B. Ramipril 5mg"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="medikament_1_seit" placeholder="z.B. 2021"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="medikament_2"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="medikament_2_seit"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="medikament_3"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="medikament_3_seit"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="medikament_4"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="medikament_4_seit"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="medikament_5"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="medikament_5_seit"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="medikament_6"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="medikament_6_seit"></div>
+                            <div class="col-main">
+                                <textarea id="medikamente" name="medikamente" rows="5" placeholder="Name und Dosierung der Medikamente..."></textarea>
+                            </div>
+                            <div class="col-side">
+                                <label style="font-size: 16px; margin-bottom: 5px; font-weight: bold;">seit:</label>
+                                <textarea id="medikamente_seit" name="medikamente_seit" rows="5" placeholder="Z.B. 3 Monaten..."></textarea>
+                            </div>
                         </div>
                     </div>
 
                     <div class="topic-section">
                         <p class="topic-title">Bisherige stationäre Aufenthalte, Operationen, Therapien</p>
+                        <span class="topic-subtitle">Bitte listen Sie diese kurz auf. Falls keine: "Keine".</span>
                         
                         <div class="form-row">
                             <div class="col-main">
-                                <label style="font-size: 16px; margin-bottom: 5px;">Kurze Auflistung:</label>
-                                <textarea id="vorbehandlungen" name="vorbehandlungen" rows="4" placeholder="Falls keine: 'Keine'"></textarea>
+                                <textarea id="vorbehandlungen" name="vorbehandlungen" rows="5"></textarea>
                             </div>
                             <div class="col-side">
-                                <label style="font-size: 16px; margin-bottom: 5px;">Zeitraum:</label>
-                                <textarea id="vorbehandlungen_zeitraum" name="vorbehandlungen_zeitraum" rows="4" placeholder="z.B. 2022-2024"></textarea>
+                                <label style="font-size: 16px; margin-bottom: 5px; font-weight: bold;">Zeitraum:</label>
+                                <textarea id="vorbehandlungen_zeitraum" name="vorbehandlungen_zeitraum" rows="5" placeholder="Z.B. 2022-2024"></textarea>
                             </div>
                         </div>
 
-                        <div class="form-row" style="margin-top: 15px; align-items: center;">
+                        <div class="form-row" style="margin-top: 20px;">
                             <div class="col-main">
-                                <label class="choice-label" style="margin-bottom: 0;">
+                                <label class="choice-label" style="margin-bottom: 0; height: 100%;">
                                     <input type="checkbox" name="intensivstation" value="ja"> davon Intensivstation
                                 </label>
                             </div>
                             <div class="col-side">
-                                <input type="text" class="list-input" name="intensiv_zeitraum" placeholder="Zeitraum/Dauer (z.B. 3 Tage)">
+                                <label style="font-size: 16px; margin-bottom: 5px; font-weight: bold;">Zeitraum/Dauer:</label>
+                                <textarea id="intensiv_zeitraum" name="intensiv_zeitraum" rows="2" placeholder="Z.B. 3 Tage"></textarea>
                             </div>
                         </div>
                     </div>
