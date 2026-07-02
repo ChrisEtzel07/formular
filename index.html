@@ -375,6 +375,32 @@
             </div>
 
             <div class="form-group">
+                <label for="medikamente">seit:</label>
+                <textarea id="seit_wann" name="seit_wann" rows="5" placeholder="Z.B. 3 Monaten, 2 Jahren..." required></textarea>
+                <textarea id="medikamente" name="medikamente" rows="5"></textarea>
+            </div>
+
+
+            <div class="form-group">
+                <label for="medikamente">Bisherige stationäre Aufenthalte, Operationen, Therapien</label>
+                <span class="helper-text">Bitte listen Sie Name und Dosierung auf. Falls keine: Bitte "Keine" eintragen.</span>
+                <textarea id="medikamente" name="medikamente" rows="5"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="medikamente">Zeitraum:</label>
+                <textarea id="seit_wann" name="Zeitraum" rows="5" placeholder="Z.B.3 Monaten, 2 Jahren..." required></textarea>
+                <textarea id="medikamente" name="medikamente" rows="5"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>davon Intensivstation</label>
+                <label class="choice-label">
+                    <input type="checkbox" name="hilfsmittel" value="rollstuhl"> 
+                </label>
+            </div>
+
+            <div class="form-group">
                 <label>Rauchen Sie?</label>
                 <label class="choice-label">
                     <input type="radio" name="rauchen" value="nein" checked> Nein
@@ -392,21 +418,53 @@
                 <label>Um das Risiko von Infektionen mit multiresistenten Keimen (MRSA) im Krankenhaus zu verringern, bitten wir Sie folgende Fragen zu beantworten.</label>
                 <label class="choice-label">
                     <input type="checkbox" name="mrsa_kontakt" value="ja"> Ich hatte in den letzten Monaten Kontakt zu MRSA-Trägern
-                    <input type="checkbox" name="mrsa_kontakt" value="ja"> test
                 </label>
                 <label class="choice-label">
-                <input type="checkbox" name="neu" value="ja"> neu
+                <input type="checkbox" name="neu" value="ja"> dialysepflichtig
             </label>
             <label class="choice-label">
-                <input type="checkbox" name="neu" value="ja"> neu
+                <input type="checkbox" name="neu" value="ja"> Brandverletzung
             </label>
             <label class="choice-label">
-                <input type="checkbox" name="neu" value="ja"> neu
+                <input type="checkbox" name="neu" value="ja"> dialysepflichtig mit liegendem Katheter
             </label>
             <label class="choice-label">
-                <input type="checkbox" name="neu" value="ja"> neu
+                <input type="checkbox" name="neu" value="ja"> offene Wunde, chronisch
+            </label>
+            <label class="choice-label">
+                <input type="checkbox" name="neu" value="ja"> Arbeit im Schweinemastbetrieb
+            </label>
+            <label class="choice-label">
+                <input type="checkbox" name="neu" value="ja"> Luftröhren-Kanüle (Tracheostoma), Magensonde(PEG-Anlage), Port, Katheter(z.B. suprapubisch, transurethral), ö.ä.
             </label>
             </div>
+
+<div class="form-group">
+     <label class="choice-label">
+                <input type="checkbox" name="neu" value="ja"> Freunde / Bekannte
+            </label> <label class="choice-label">
+                <input type="checkbox" name="neu" value="ja"> Empfehlung vom Arzt / Therapeuten
+            </label> <label class="choice-label">
+                <input type="checkbox" name="neu" value="ja"> Patienteninformationstag
+            </label> <label class="choice-label">
+                <input type="checkbox" name="neu" value="ja"> Zeitungen und Zeitschriften
+            </label> <label class="choice-label">
+                <input type="checkbox" name="neu" value="ja"> Fernseher Radio 
+            </label> <label class="choice-label">
+                <input type="checkbox" name="neu" value="ja"> Internetsuche
+            </label>
+            </label> <label class="choice-label">
+                <input type="checkbox" name="neu" value="ja"> Facebook
+            </label>
+            </label> <label class="choice-label">
+                <input type="checkbox" name="neu" value="ja"> Instagram
+            </label>
+            </label> <label class="choice-label">
+                <input type="checkbox" name="neu" value="ja"> Sonstiges
+            </label>
+
+        </div>
+
 
             <div class="dsgvo-box">
                 <label style="color: var(--primary); margin-bottom: 12px;">Datenschutz-Einwilligung *</label>
