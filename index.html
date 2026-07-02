@@ -45,7 +45,7 @@
     /* --- STICKY-VIDEO LAYOUT --- */
     .main-layout-wrapper {
         display: grid;
-        grid-template-columns: 1.3fr 1fr; /* ANGEPASST: 56% Formular / 44% Video für ein größeres Video */
+        grid-template-columns: 1.3fr 1fr; /* 56% Formular / 44% Video */
         gap: 40px;
         /* CRITICAL FÜR STICKY: Zwingt die Videospalte, sich nicht unendlich langzustrecken */
         align-items: flex-start; 
@@ -63,14 +63,14 @@
 
     /* Der fixierte Container beim Scrollen */
     .video-sticky-box {
-        position: relative; /* WICHTIG: Geändert von sticky auf relative für JavaScript-Steuerung */
-        top: 0; /* Wird dynamisch per JS gesteuert */
+        position: relative; 
+        top: 0; 
         background: #f9f9f9;
         padding: 24px;
         border-radius: 12px;
         border: 1px solid #e0e0e0;
         box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-        z-index: 100; /* Sorgt dafür, dass das Video immer im Vordergrund bleibt */
+        z-index: 100; 
     }
 
     .video-sticky-box h3 {
@@ -188,6 +188,14 @@
 
     .form-row .col-side {
         flex: 1;
+    }
+
+    .table-header {
+        display: flex;
+        font-weight: bold;
+        font-size: 16px;
+        color: var(--primary);
+        margin-bottom: 5px;
     }
 
     legend {
@@ -343,21 +351,123 @@
         display: none;
     }
 
-    /* DEAKTIVIERT STICKY AUF MOBILGERÄTEN KORREKT */
+    /* ===================================================
+       HOCHGRADIG OPTIMIERTES MOBILE-DESIGN (SMARTPHONES)
+       =================================================== */
     @media (max-width: 1150px) {
+        body {
+            padding: 10px;
+            font-size: 18px; 
+        }
+
+        .container {
+            padding: 20px 15px;
+            margin: 10px auto;
+            border-radius: 12px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        .intro-text {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
         .main-layout-wrapper {
-            grid-template-columns: 1fr; /* Wechselt stabil auf Einspaltigkeit untereinander */
-            gap: 35px;
+            grid-template-columns: 1fr; 
+            gap: 30px;
             min-height: auto;
         }
-        .video-sidebar {
-            width: 100%;
-            grid-row: 1; /* Schiebt das Video mobil nach ganz oben über das Formular */
+
+        .form-content-side {
+            grid-row: 1; 
         }
+
+        .video-sidebar {
+            grid-row: 2; 
+            width: 100%;
+            margin-top: 10px;
+        }
+
         .video-sticky-box {
-            position: static !important; /* Schaltet JavaScript-Fix mobil aus */
+            position: static !important; 
             width: 100% !important;
             top: auto !important;
+            padding: 20px;
+        }
+
+        .video-sticky-box h3 {
+            font-size: 20px;
+        }
+
+        /* Verstecke die Tabellen-Kopfzeilen mobil, da Eingaben untereinander stehen */
+        .table-header {
+            display: none;
+        }
+
+        /* Formular-Zeilen und Tabellen-Eingaben mobil untereinander brechen */
+        .form-row {
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #e8e8e8;
+        }
+
+        .form-row > div, 
+        .form-row .col-main, 
+        .form-row .col-side {
+            flex: none;
+            width: 100%;
+        }
+
+        /* Platzhalter mobil als Beschriftungshilfe optimieren */
+        .list-input {
+            font-size: 18px !important;
+            padding: 12px !important;
+        }
+
+        .topic-section {
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        textarea {
+            padding: 12px;
+            font-size: 18px;
+        }
+
+        .choice-label {
+            padding: 12px;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+        }
+
+        .button-row {
+            margin-top: 30px;
+            gap: 12px;
+        }
+
+        button {
+            padding: 16px 20px;
+            font-size: 18px;
+        }
+
+        .btn-back {
+            min-width: 100px;
         }
     }
 </style>
@@ -393,7 +503,7 @@
                 <div class="form-step active" data-step="1">
                     <legend>1. Wer stellt die Anfrage?</legend>
                     
-                    <div class="form-row">
+                    <div class="form-row" style="border: none; padding: 0;">
                         <div style="flex: 1;">
                             <label for="vorname">Vorname *</label>
                             <input type="text" id="vorname" name="vorname" required autocomplete="given-name">
@@ -467,26 +577,26 @@
                         <p class="topic-title">Ich habe folgende Diagnose/n *</p>
                         <span class="topic-subtitle">Falls vorhanden</span>
                         
-                        <div class="form-row" style="font-weight: bold; font-size: 16px; color: var(--primary); margin-bottom: 5px;">
+                        <div class="table-header">
                             <div class="col-main">Diagnose</div>
                             <div class="col-side">seit</div>
                         </div>
 
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="diagnose_1" required placeholder="Diagnose *"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="diagnose_1_seit" required placeholder="z.B. 3 Monaten *"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="diagnose_1" required placeholder="Diagnose 1 *"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="diagnose_1_seit" required placeholder="seit (z.B. 3 Monaten) *"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="diagnose_2"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="diagnose_2_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="diagnose_2" placeholder="Diagnose 2"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="diagnose_2_seit" placeholder="seit"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="diagnose_3"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="diagnose_3_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="diagnose_3" placeholder="Diagnose 3"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="diagnose_3_seit" placeholder="seit"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="diagnose_4"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="diagnose_4_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="diagnose_4" placeholder="Diagnose 4"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="diagnose_4_seit" placeholder="seit"></div>
                         </div>
                     </div>
                     
@@ -494,52 +604,52 @@
                         <p class="topic-title">Ich möchte mich vor allem wegen folgender Beschwerden behandeln lassen:</p>
                         <span class="topic-subtitle">(z.B. Schwindel, Schmerzen, Schlaflosigkeit, Nahrungsmittelunverträglichkeit...)</span>
                         
-                        <div class="form-row" style="font-weight: bold; font-size: 16px; color: var(--primary); margin-bottom: 5px;">
+                        <div class="table-header">
                             <div class="col-main">Beschwerden</div>
                             <div class="col-side">seit</div>
                         </div>
 
                         <div class="form-row">
                             <div class="col-main"><input type="text" class="list-input" name="beschwerde_1" required placeholder="Hauptbeschwerde *"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_1_seit" required placeholder="z.B. 3 Monaten *"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_1_seit" required placeholder="seit (z.B. 3 Monaten) *"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_2"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_2_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_2" placeholder="Weitere Beschwerde"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_2_seit" placeholder="seit"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_3"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_3_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_3" placeholder="Weitere Beschwerde"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_3_seit" placeholder="seit"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_4"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_4_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_4" placeholder="Weitere Beschwerde"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_4_seit" placeholder="seit"></div>
                         </div>
                     </div>
 
                     <div class="topic-section">
                         <p class="topic-title">Weitere Beschwerden</p>
                         
-                        <div class="form-row" style="font-weight: bold; font-size: 16px; color: var(--primary); margin-bottom: 5px;">
+                        <div class="table-header">
                             <div class="col-main">Weitere Beschwerden</div>
                             <div class="col-side">seit</div>
                         </div>
 
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="weitere_beschwerde_1"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="weitere_beschwerde_1_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="weitere_beschwerde_1" placeholder="Beschwerde"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="weitere_beschwerde_1_seit" placeholder="seit"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="weitere_beschwerde_2"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="weitere_beschwerde_2_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="weitere_beschwerde_2" placeholder="Beschwerde"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="weitere_beschwerde_2_seit" placeholder="seit"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="weitere_beschwerde_3"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="weitere_beschwerde_3_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="weitere_beschwerde_3" placeholder="Beschwerde"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="weitere_beschwerde_3_seit" placeholder="seit"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="weitere_beschwerde_4"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="weitere_beschwerde_4_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="weitere_beschwerde_4" placeholder="Beschwerde"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="weitere_beschwerde_4_seit" placeholder="seit"></div>
                         </div>
                     </div>
                     
@@ -557,41 +667,41 @@
                         <p class="topic-title">Ich nehme folgende Medikamente:</p>
                         <span class="topic-subtitle">(z.B. Hormone, Abführmittel, Blutdrucksenker... Falls keine: "Keine" in erste Zeile schreiben)</span>
                         
-                        <div class="form-row" style="font-weight: bold; font-size: 16px; color: var(--primary); margin-bottom: 5px;">
+                        <div class="table-header">
                             <div class="col-main">Medikament (Name und Dosierung)</div>
                             <div class="col-side">seit</div>
                         </div>
 
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="medikament_1" placeholder="z.B. Ramipril 5mg"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="medikament_1_seit" placeholder="z.B. 2021"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_1" placeholder="z.B. Ramipril 5mg (Oder 'Keine')"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_1_seit" placeholder="seit (z.B. 2021)"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="medikament_2"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="medikament_2_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_2" placeholder="Medikament 2"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_2_seit" placeholder="seit"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="medikament_3"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="medikament_3_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_3" placeholder="Medikament 3"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_3_seit" placeholder="seit"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="medikament_4"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="medikament_4_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_4" placeholder="Medikament 4"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_4_seit" placeholder="seit"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="medikament_5"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="medikament_5_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_5" placeholder="Medikament 5"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_5_seit" placeholder="seit"></div>
                         </div>
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="medikament_6"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="medikament_6_seit"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_6" placeholder="Medikament 6"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_6_seit" placeholder="seit"></div>
                         </div>
                     </div>
 
                     <div class="topic-section">
                         <p class="topic-title">Bisherige stationäre Aufenthalte, Operationen, Therapien</p>
                         
-                        <div class="form-row">
+                        <div class="form-row" style="border: none; padding: 0;">
                             <div class="col-main">
                                 <label style="font-size: 16px; margin-bottom: 5px;">Kurze Auflistung:</label>
                                 <textarea id="vorbehandlungen" name="vorbehandlungen" rows="4" placeholder="Falls keine: 'Keine'"></textarea>
@@ -602,7 +712,7 @@
                             </div>
                         </div>
 
-                        <div class="form-row" style="margin-top: 15px; align-items: center;">
+                        <div class="form-row" style="margin-top: 15px; align-items: center; border: none; padding: 0;">
                             <div class="col-main">
                                 <label class="choice-label" style="margin-bottom: 0;">
                                     <input type="checkbox" name="intensivstation" value="ja"> davon Intensivstation
@@ -782,7 +892,6 @@
         // DYNAMISCHER JAVASCRIPT-STICKY-ERSATZ FÜR DAS VIDEO
         // ===================================================
         function handleScrollVideo() {
-            // Nur auf Desktop-Bildschirmen ausführen (über 1150px)
             if (window.innerWidth > 1150) {
                 const sidebar = document.querySelector('.video-sidebar');
                 const stickyBox = document.querySelector('.video-sticky-box');
@@ -795,29 +904,24 @@
                 const boxHeight = stickyBox.offsetHeight;
                 const scrollTop = window.scrollY;
 
-                // Sobald wir an den oberen Rand der Videobox scrollen
                 if (scrollTop > wrapperTop - 30) {
-                    // Verhindert, dass das Video unten aus dem Formular-Rahmen herausfällt
                     if (scrollTop + boxHeight + 60 > wrapperBottom) {
                         stickyBox.style.position = 'absolute';
                         stickyBox.style.top = 'auto';
                         stickyBox.style.bottom = '0';
                         stickyBox.style.width = '100%';
                     } else {
-                        // Das Video heftet sich an den Bildschirm und läuft flüssig mit
                         stickyBox.style.position = 'fixed';
                         stickyBox.style.top = '30px';
                         stickyBox.style.bottom = 'auto';
-                        stickyBox.style.width = sidebar.offsetWidth + 'px'; // Behält die exakte Breite der Spalte bei
+                        stickyBox.style.width = sidebar.offsetWidth + 'px';
                     }
                 } else {
-                    // Ausgangszustand ganz oben auf der Seite
                     stickyBox.style.position = 'relative';
                     stickyBox.style.top = '0';
                     stickyBox.style.width = '100%';
                 }
             } else {
-                // Sicherheits-Reset für Mobilgeräte
                 const stickyBox = document.querySelector('.video-sticky-box');
                 if (stickyBox) {
                     stickyBox.style.position = 'static';
@@ -826,7 +930,6 @@
             }
         }
 
-        // Event-Listener für das Scrollen und Verändern der Fenstergröße
         window.addEventListener('scroll', handleScrollVideo);
         window.addEventListener('resize', handleScrollVideo);
 
@@ -836,7 +939,6 @@
                     currentStep++;
                     showStep(currentStep);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                    // Aktualisiert das Video-Scrollverhalten nach dem Schrittwechsel
                     setTimeout(handleScrollVideo, 100);
                 }
             }
@@ -847,7 +949,6 @@
                 currentStep--;
                 showStep(currentStep);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                // Aktualisiert das Video-Scrollverhalten nach dem Schrittwechsel
                 setTimeout(handleScrollVideo, 100);
             }
         });
@@ -867,7 +968,6 @@
         });
 
         showStep(currentStep);
-        // Initialer Aufruf beim Laden der Seite
         setTimeout(handleScrollVideo, 200);
     });
 </script>
