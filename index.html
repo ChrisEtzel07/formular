@@ -334,23 +334,36 @@
                 <label class="choice-label">
                     <input type="checkbox" name="hilfsmittel" value="rollator"> Ich benötige einen Rollator
                 </label>
+                <label class="choice-label">
+                    <input type="checkbox" name="hilfsmittel" value="rollator"> Ich bin pfelgebedürftig
+                </label>
             </div>
         </div>
 
         <div class="form-step" data-step="3">
-            <legend>3. Medizinische Gründe</legend>
-            
-            <div class="form-group">
-                <label for="hauptbeschwerden">Wegen welcher Hauptbeschwerden möchten Sie behandelt werden? *</label>
-                <span class="helper-text">Z.B. chronische Schmerzen, Schlaflosigkeit, Magenprobleme...</span>
-                <textarea id="hauptbeschwerden" name="hauptbeschwerden" rows="5" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="diagnosen">Bekannte Diagnosen von Ihrem Arzt</label>
-                <textarea id="diagnosen" name="diagnosen" rows="3" placeholder="Falls zur Hand, z.B. Arthrose, Migräne..."></textarea>
-            </div>
+    <legend>3. Medizinische Gründe</legend>
+    
+    <div class="form-row">
+        <div class="form-group col">
+            <label for="hauptbeschwerden">Ich habe folgende Diagnose/n *</label>
+            <span class="helper-text">Z.B. chronische Schmerzen, Schlaflosigkeit, Magenprobleme...</span>
+            <textarea id="hauptbeschwerden" name="hauptbeschwerden" rows="5" required></textarea>
         </div>
+
+        <div class="form-group col col-short">
+            <label for="seit_wann">seit: *</label>
+            <textarea id="seit_wann" name="seit_wann" rows="5" placeholder="Z.B. 3 Monaten, 2 Jahren..." required></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="diagnosen">Bekannte Diagnosen von Ihrem Arzt</label>
+        <textarea id="diagnosen" name="diagnosen" rows="3" placeholder="Falls zur Hand, z.B. Arthrose, Migräne..."></textarea>
+    </div>
+    <label class="choice-label">
+                    <input type="checkbox" name="hilfsmittel" value="rollator"> Ich bin Schwanger
+                </label>
+</div>
 
         <div class="form-step" data-step="4">
             <legend>4. Medikamente & Vorbehandlung</legend>
