@@ -63,15 +63,14 @@
 
     /* Der fixierte Container beim Scrollen */
     .video-sticky-box {
-        position: -webkit-sticky; /* Safari Support */
-        position: sticky;
-        top: 30px; /* Abstand zum oberen Bildschirmrand beim Scrollen */
+        position: relative; /* WICHTIG: Geändert von sticky auf relative für JavaScript-Steuerung */
+        top: 0; /* Wird dynamisch per JS gesteuert */
         background: #f9f9f9;
         padding: 24px;
         border-radius: 12px;
         border: 1px solid #e0e0e0;
         box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-        will-change: transform; /* Hardware-Beschleunigung für flüssiges Scrollen */
+        z-index: 100; /* Sorgt dafür, dass das Video immer im Vordergrund bleibt */
     }
 
     .video-sticky-box h3 {
@@ -356,7 +355,9 @@
             grid-row: 1; /* Schiebt das Video mobil nach ganz oben über das Formular */
         }
         .video-sticky-box {
-            position: static; /* Schaltet Sticky mobil ab */
+            position: static !important; /* Schaltet JavaScript-Fix mobil aus */
+            width: 100% !important;
+            top: auto !important;
         }
     }
 </style>
@@ -777,12 +778,66 @@
             return allValid;
         }
 
+        // ===================================================
+        // DYNAMISCHER JAVASCRIPT-STICKY-ERSATZ FÜR DAS VIDEO
+        // ===================================================
+        function handleScrollVideo() {
+            // Nur auf Desktop-Bildschirmen ausführen (über 1150px)
+            if (window.innerWidth > 1150) {
+                const sidebar = document.querySelector('.video-sidebar');
+                const stickyBox = document.querySelector('.video-sticky-box');
+                const wrapper = document.querySelector('.main-layout-wrapper');
+                
+                if (!sidebar || !stickyBox || !wrapper) return;
+
+                const wrapperTop = wrapper.getBoundingClientRect().top + window.scrollY;
+                const wrapperBottom = wrapperTop + wrapper.offsetHeight;
+                const boxHeight = stickyBox.offsetHeight;
+                const scrollTop = window.scrollY;
+
+                // Sobald wir an den oberen Rand der Videobox scrollen
+                if (scrollTop > wrapperTop - 30) {
+                    // Verhindert, dass das Video unten aus dem Formular-Rahmen herausfällt
+                    if (scrollTop + boxHeight + 60 > wrapperBottom) {
+                        stickyBox.style.position = 'absolute';
+                        stickyBox.style.top = 'auto';
+                        stickyBox.style.bottom = '0';
+                        stickyBox.style.width = '100%';
+                    } else {
+                        // Das Video heftet sich an den Bildschirm und läuft flüssig mit
+                        stickyBox.style.position = 'fixed';
+                        stickyBox.style.top = '30px';
+                        stickyBox.style.bottom = 'auto';
+                        stickyBox.style.width = sidebar.offsetWidth + 'px'; // Behält die exakte Breite der Spalte bei
+                    }
+                } else {
+                    // Ausgangszustand ganz oben auf der Seite
+                    stickyBox.style.position = 'relative';
+                    stickyBox.style.top = '0';
+                    stickyBox.style.width = '100%';
+                }
+            } else {
+                // Sicherheits-Reset für Mobilgeräte
+                const stickyBox = document.querySelector('.video-sticky-box');
+                if (stickyBox) {
+                    stickyBox.style.position = 'static';
+                    stickyBox.style.width = '100%';
+                }
+            }
+        }
+
+        // Event-Listener für das Scrollen und Verändern der Fenstergröße
+        window.addEventListener('scroll', handleScrollVideo);
+        window.addEventListener('resize', handleScrollVideo);
+
         nextBtn.addEventListener("click", () => {
             if (validateStep(currentStep)) {
                 if (currentStep < totalSteps - 1) {
                     currentStep++;
                     showStep(currentStep);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                    // Aktualisiert das Video-Scrollverhalten nach dem Schrittwechsel
+                    setTimeout(handleScrollVideo, 100);
                 }
             }
         });
@@ -792,6 +847,8 @@
                 currentStep--;
                 showStep(currentStep);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Aktualisiert das Video-Scrollverhalten nach dem Schrittwechsel
+                setTimeout(handleScrollVideo, 100);
             }
         });
 
@@ -810,6 +867,8 @@
         });
 
         showStep(currentStep);
+        // Initialer Aufruf beim Laden der Seite
+        setTimeout(handleScrollVideo, 200);
     });
 </script>
 
