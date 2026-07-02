@@ -30,8 +30,9 @@
             margin: 0;
         }
 
+        /* NEU: Maximale Breite erhöht, damit beide Spalten sehr groß nebeneinander passen */
         .container {
-            max-width: 750px; /* Zurück auf die perfekte Lesebreite für Formulare */
+            max-width: 1400px; 
             margin: 40px auto;
             background: #ffffff;
             padding: 40px;
@@ -40,47 +41,54 @@
             border-top: 8px solid var(--primary);
         }
 
-        /* --- OBERER BEREICH: GROSSES STICKY VIDEO --- */
-        .video-top-container {
-            position: sticky;
-            top: 10px; /* Heftet sich beim Scrollen oben an */
-            z-index: 100;
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #e0e0e0;
-            margin-bottom: 35px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+        /* --- GROSSES NEBENEINANDER-LAYOUT (50% Formular / 50% Video) --- */
+        .main-layout-wrapper {
+            display: flex;
+            gap: 50px;
+            align-items: flex-start;
         }
 
-        .video-header-box {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* Beide Spalten teilen sich den Platz gleichmäßig auf */
+        .form-content-side {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .video-sidebar {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Das Video bleibt rechts fixiert und wandert beim Scrollen mit */
+        .video-sticky-box {
+            position: sticky;
+            top: 20px;
+            background: #f9f9f9;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .video-sticky-box h3 {
+            margin-top: 0;
+            font-size: 22px;
+            color: var(--primary);
             margin-bottom: 10px;
         }
 
-        .video-top-container h3 {
-            margin: 0;
-            font-size: 22px;
-            color: var(--primary);
-        }
-
         .video-help-text {
-            font-size: 15px;
+            font-size: 16px;
             color: #555;
-            margin: 0 0 15px 0;
-            line-height: 1.4;
+            line-height: 1.5;
+            margin-bottom: 20px;
         }
 
-        /* Das Video nutzt jetzt die vollen 100% der Formularbreite für beste Erkennbarkeit */
         .video-responsive-container {
             width: 100%;
-            max-width: 100%;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             background: #000;
         }
 
@@ -88,7 +96,6 @@
             display: block;
             width: 100%;
             height: auto;
-            max-height: 400px; /* Verhindert, dass das Video im Vollformat zu hoch wird */
         }
 
         /* --- LOGO BEREICH --- */
@@ -152,7 +159,7 @@
             transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- SCHRITTE-LOGIK & ZWEISPALTIK-LAYOUT --- */
+        /* --- SCHRITTE-LOGIK & SPALTEN --- */
         .form-step {
             display: none;
         }
@@ -289,7 +296,7 @@
             accent-color: var(--primary);
         }
 
-        /* --- BUTTONS --- */
+        /* --- NAVIGATION --- */
         .button-row {
             display: flex;
             justify-content: space-between;
@@ -349,7 +356,21 @@
             display: none;
         }
 
-        /* RESPONSIVE DESIGN */
+        /* RESPONSIVE DESIGN: Auf Tablets und Smartphones untereinander stapeln */
+        @media (max-width: 1024px) {
+            .main-layout-wrapper {
+                flex-direction: column-reverse; /* Video rutscht nach oben */
+                gap: 35px;
+            }
+            .video-sidebar {
+                width: 100%;
+                flex: none;
+            }
+            .video-sticky-box {
+                position: static; /* Sticky auf kleinen Displays deaktivieren */
+            }
+        }
+
         @media (max-width: 600px) {
             .form-row {
                 flex-direction: column;
@@ -377,259 +398,265 @@
     <h1>Anfrage zur Aufnahme</h1>
     <p class="intro-text">Nehmen Sie sich Zeit. Wir begleiten Sie Schritt für Schritt durch das Formular.</p>
 
-    <div class="video-top-container">
-        <div class="video-header-box">
-            <h3>Video-Anleitung zum Aufnahmebogen</h3>
-        </div>
-        <p class="video-help-text">Unsere Aufnahmeärztin zeigt Ihnen in dieser Bildschirmaufnahme ganz genau, wie Sie die Felder optimal ausfüllen.</p>
+    <div class="main-layout-wrapper">
         
-        <div class="video-responsive-container">
-            <video controls width="100%">
-                <source src="anleitung.mp4" type="video/mp4">
-                Ihr Browser unterstützt keine Videos.
-            </video>
-        </div>
-    </div>
-
-    <div class="progress-container">
-        <span class="progress-text" id="progressLabel">Schritt 1 von 5: Ihre Kontaktdaten</span>
-        <div class="progress-bar-bg">
-            <div class="progress-bar-fill" id="progressBar"></div>
-        </div>
-    </div>
-
-    <div class="error-summary" id="errorSummary">
-        Bitte füllen Sie die rot markierten Pflichtfelder aus, um fortzufahren.
-    </div>
-
-    <form id="tcmKlinikForm" autocomplete="on">
-        
-        <div class="form-step active" data-step="1">
-            <legend>1. Wer stellt die Anfrage?</legend>
+        <div class="form-content-side">
             
-            <div class="form-row">
-                <div class="form-group col">
-                    <label for="vorname">Vorname *</label>
-                    <input type="text" id="vorname" name="vorname" required autocomplete="given-name">
-                </div>
-
-                <div class="form-group col">
-                    <label for="nachname">Nachname *</label>
-                    <input type="text" id="nachname" name="nachname" required autocomplete="family-name">
+            <div class="progress-container">
+                <span class="progress-text" id="progressLabel">Schritt 1 von 5: Ihre Kontaktdaten</span>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progressBar"></div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="geburtsdatum">Geburtsdatum *</label>
-                <span class="helper-text">Beispiel: 14.05.1955</span>
-                <input type="date" id="geburtsdatum" name="geburtsdatum" required>
+            <div class="error-summary" id="errorSummary">
+                Bitte füllen Sie die rot markierten Pflichtfelder aus, um fortzufahren.
             </div>
 
-            <div class="form-group">
-                <label for="telefon">Telefonnummer *</label>
-                <span class="helper-text">Für den kostenfreien Rückruf unserer Aufnahmeärztin</span>
-                <input type="tel" id="telefon" name="telefon" required autocomplete="tel">
-            </div>
-
-            <div class="form-group">
-                <label for="email">E-Mail-Adresse *</label>
-                <input type="email" id="email" name="email" required autocomplete="email">
-            </div>
-        </div>
-
-        <div class="form-step" data-step="2">
-            <legend>2. Ihr Aufenthalt</legend>
-
-            <div class="form-group">
-                <label for="krankenkasse">Krankenkasse / Versicherung *</label>
-                <input type="text" id="krankenkasse" name="krankenkasse" required placeholder="z.B. Techniker Krankenkasse, AOK...">
-            </div>
-
-            <div class="form-group">
-                <label>Zimmerwunsch</label>
-                <label class="choice-label">
-                    <input type="radio" name="zimmer" value="einzelzimmer"> Einzelzimmer
-                </label>
-                <label class="choice-label">
-                    <input type="radio" name="zimmer" value="doppelzimmer" checked> Doppelzimmer
-                </label>
-            </div>
-
-            <div class="form-group">
-                <label>Benötigen Sie vor Ort Hilfsmittel?</label>
-                <label class="choice-label">
-                    <input type="checkbox" name="hilfsmittel[]" value="rollstuhl"> Ich benötige einen Rollstuhl
-                </label>
-                <label class="choice-label">
-                    <input type="checkbox" name="hilfsmittel[]" value="rollator"> Ich benötige einen Rollator
-                </label>
-                <label class="choice-label">
-                    <input type="checkbox" name="hilfsmittel[]" value="pflegebeduerftig"> Ich bin pflegebedürftig
-                </label>
-            </div>
-        </div>
-
-        <div class="form-step" data-step="3">
-            <legend>3. Medizinische Gründe</legend>
-            
-            <div class="form-row">
-                <div class="form-group col">
-                    <label for="hauptbeschwerden">Ich habe folgende Diagnose/n *</label>
-                    <span class="helper-text">Z.B. chronische Schmerzen, Schlaflosigkeit, Magenprobleme...</span>
-                    <textarea id="hauptbeschwerden" name="hauptbeschwerden" rows="5" required></textarea>
-                </div>
-
-                <div class="form-group col col-short">
-                    <label for="hauptbeschwerden_seit">seit: *</label>
-                    <textarea id="hauptbeschwerden_seit" name="hauptbeschwerden_seit" rows="5" placeholder="Z.B. 3 Monaten..." required></textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="diagnosen">Bekannte Diagnosen von Ihrem Arzt</label>
-                <textarea id="diagnosen" name="diagnosen" rows="3" placeholder="Falls zur Hand, z.B. Arthrose, Migräne..."></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label class="choice-label">
-                    <input type="checkbox" name="schwanger" value="ja"> Ich bin schwanger
-                </label>
-            </div>
-        </div>
-
-        <div class="form-step" data-step="4">
-            <legend>4. Medikamente & Vorbehandlung</legend>
-
-            <div class="form-row">
-                <div class="form-group col">
-                    <label for="medikamente">Welche Medikamente nehmen Sie aktuell ein?</label>
-                    <span class="helper-text">Bitte listen Sie Name und Dosierung auf. Falls keine: "Keine".</span>
-                    <textarea id="medikamente" name="medikamente" rows="5"></textarea>
-                </div>
-
-                <div class="form-group col col-short">
-                    <label for="medikamente_seit">seit:</label>
-                    <textarea id="medikamente_seit" name="medikamente_seit" rows="5" placeholder="Z.B. 3 Monaten..."></textarea>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col">
-                    <label for="vorbehandlungen">Bisherige stationäre Aufenthalte, Operationen, Therapien</label>
-                    <span class="helper-text">Bitte listen Sie diese kurz auf. Falls keine: "Keine".</span>
-                    <textarea id="vorbehandlungen" name="vorbehandlungen" rows="5"></textarea>
-                </div>
-
-                <div class="form-group col col-short">
-                    <label for="vorbehandlungen_zeitraum">Zeitraum:</label>
-                    <textarea id="vorbehandlungen_zeitraum" name="vorbehandlungen_zeitraum" rows="5" placeholder="Z.B. 2022-2024"></textarea>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col">
-                    <label class="choice-label" style="width: 100%;">
-                        <input type="checkbox" name="intensivstation" value="ja"> davon Intensivstation
-                    </label>
-                </div>
-                <div class="form-group col col-short">
-                    <label for="intensiv_zeitraum">Zeitraum/Dauer:</label>
-                    <textarea id="intensiv_zeitraum" name="intensiv_zeitraum" rows="2" placeholder="Z.B. 3 Tage"></textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Rauchen Sie?</label>
-                <label class="choice-label">
-                    <input type="radio" name="rauchen" value="nein" checked> Nein
-                </label>
-                <label class="choice-label">
-                    <input type="radio" name="rauchen" value="ja"> Ja
-                </label>
-            </div>
-        </div>
-
-        <div class="form-step" data-step="5">
-            <legend>5. Sicherheit & Datenschutz</legend>
-
-            <div class="topic-section">
-                <p class="topic-title">Vorsorgliche Sicherheitsfragen (MRSA-Schutz)</p>
-                <span class="helper-text" style="margin-bottom: 15px;">Um das Risiko von Infektionen mit multiresistenten Keimen (MRSA) im Krankenhaus zu verringern, bitten wir Sie folgende Fragen zu beantworten:</span>
+            <form id="tcmKlinikForm" autocomplete="on">
                 
-                <label class="choice-label">
-                    <input type="checkbox" name="mrsa_risiko[]" value="mrsa_kontakt"> Ich hatte in den letzten Monaten Kontakt zu MRSA-Trägern
-                </label>
-                <label class="choice-label">
-                    <input type="checkbox" name="mrsa_risiko[]" value="dialyse"> dialysepflichtig
-                </label>
-                <label class="choice-label">
-                    <input type="checkbox" name="mrsa_risiko[]" value="dialyse_katheter"> dialysepflichtig mit Katheter
-                </label>
-                <label class="choice-label">
-                    <input type="checkbox" name="mrsa_risiko[]" value="brandverletzung"> Brandverletzung
-                </label>
-                <label class="choice-label">
-                    <input type="checkbox" name="mrsa_risiko[]" value="offene_wunde"> offene Wunde, chronisch
-                </label>
-                <label class="choice-label">
-                    <input type="checkbox" name="mrsa_risiko[]" value="schweinemast"> Arbeit im Schweinemastbetrieb
-                </label>
-                <label class="choice-label">
-                    <input type="checkbox" name="mrsa_risiko[]" value="katheter_sonde"> Luftröhren-Kanüle (Tracheostoma), Magensonde(PEG-Anlage), Port, Katheter o.ä.
-                </label>
-            </div>
+                <div class="form-step active" data-step="1">
+                    <legend>1. Wer stellt die Anfrage?</legend>
+                    
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="vorname">Vorname *</label>
+                            <input type="text" id="vorname" name="vorname" required autocomplete="given-name">
+                        </div>
 
-            <div class="topic-section">
-                <p class="topic-title">Wie sind Sie auf unsere Klinik aufmerksam geworden?</p>
+                        <div class="form-group col">
+                            <label for="nachname">Nachname *</label>
+                            <input type="text" id="nachname" name="nachname" required autocomplete="family-name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="geburtsdatum">Geburtsdatum *</label>
+                        <span class="helper-text">Beispiel: 14.05.1955</span>
+                        <input type="date" id="geburtsdatum" name="geburtsdatum" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefon">Telefonnummer *</label>
+                        <span class="helper-text">Für den kostenfreien Rückruf unserer Aufnahmeärztin</span>
+                        <input type="tel" id="telefon" name="telefon" required autocomplete="tel">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-Mail-Adresse *</label>
+                        <input type="email" id="email" name="email" required autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="form-step" data-step="2">
+                    <legend>2. Ihr Aufenthalt</legend>
+
+                    <div class="form-group">
+                        <label for="krankenkasse">Krankenkasse / Versicherung *</label>
+                        <input type="text" id="krankenkasse" name="krankenkasse" required placeholder="z.B. Techniker Krankenkasse, AOK...">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Zimmerwunsch</label>
+                        <label class="choice-label">
+                            <input type="radio" name="zimmer" value="einzelzimmer"> Einzelzimmer
+                        </label>
+                        <label class="choice-label">
+                            <input type="radio" name="zimmer" value="doppelzimmer" checked> Doppelzimmer
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Benötigen Sie vor Ort Hilfsmittel?</label>
+                        <label class="choice-label">
+                            <input type="checkbox" name="hilfsmittel[]" value="rollstuhl"> Ich benötige einen Rollstuhl
+                        </label>
+                        <label class="choice-label">
+                            <input type="checkbox" name="hilfsmittel[]" value="rollator"> Ich benötige einen Rollator
+                        </label>
+                        <label class="choice-label">
+                            <input type="checkbox" name="hilfsmittel[]" value="pflegebeduerftig"> Ich bin pflegebedürftig
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-step" data-step="3">
+                    <legend>3. Medizinische Gründe</legend>
+                    
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="hauptbeschwerden">Ich habe folgende Diagnose/n *</label>
+                            <span class="helper-text">Z.B. chronische Schmerzen, Schlaflosigkeit, Magenprobleme...</span>
+                            <textarea id="hauptbeschwerden" name="hauptbeschwerden" rows="5" required></textarea>
+                        </div>
+
+                        <div class="form-group col col-short">
+                            <label for="hauptbeschwerden_seit">seit: *</label>
+                            <textarea id="hauptbeschwerden_seit" name="hauptbeschwerden_seit" rows="5" placeholder="Z.B. 3 Monaten..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="diagnosen">Bekannte Diagnosen von Ihrem Arzt</label>
+                        <textarea id="diagnosen" name="diagnosen" rows="3" placeholder="Falls zur Hand, z.B. Arthrose, Migräne..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="choice-label">
+                            <input type="checkbox" name="schwanger" value="ja"> Ich bin schwanger
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-step" data-step="4">
+                    <legend>4. Medikamente & Vorbehandlung</legend>
+
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="medikamente">Welche Medikamente nehmen Sie aktuell ein?</label>
+                            <span class="helper-text">Bitte listen Sie Name und Dosierung auf. Falls keine: "Keine".</span>
+                            <textarea id="medikamente" name="medikamente" rows="5"></textarea>
+                        </div>
+
+                        <div class="form-group col col-short">
+                            <label for="medikamente_seit">seit:</label>
+                            <textarea id="medikamente_seit" name="medikamente_seit" rows="5" placeholder="Z.B. 3 Monaten..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="vorbehandlungen">Bisherige stationäre Aufenthalte, Operationen, Therapien</label>
+                            <span class="helper-text">Bitte listen Sie diese kurz auf. Falls keine: "Keine".</span>
+                            <textarea id="vorbehandlungen" name="vorbehandlungen" rows="5"></textarea>
+                        </div>
+
+                        <div class="form-group col col-short">
+                            <label for="vorbehandlungen_zeitraum">Zeitraum:</label>
+                            <textarea id="vorbehandlungen_zeitraum" name="vorbehandlungen_zeitraum" rows="5" placeholder="Z.B. 2022-2024"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label class="choice-label" style="width: 100%;">
+                                <input type="checkbox" name="intensivstation" value="ja"> davon Intensivstation
+                            </label>
+                        </div>
+                        <div class="form-group col col-short">
+                            <label for="intensiv_zeitraum">Zeitraum/Dauer:</label>
+                            <textarea id="intensiv_zeitraum" name="intensiv_zeitraum" rows="2" placeholder="Z.B. 3 Tage"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rauchen Sie?</label>
+                        <label class="choice-label">
+                            <input type="radio" name="rauchen" value="nein" checked> Nein
+                        </label>
+                        <label class="choice-label">
+                            <input type="radio" name="rauchen" value="ja"> Ja
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-step" data-step="5">
+                    <legend>5. Sicherheit & Datenschutz</legend>
+
+                    <div class="topic-section">
+                        <p class="topic-title">Vorsorgliche Sicherheitsfragen (MRSA-Schutz)</p>
+                        <span class="helper-text" style="margin-bottom: 15px;">Um das Risiko von Infektionen mit multiresistenten Keimen (MRSA) im Krankenhaus zu verringern, bitten wir Sie folgende Fragen zu beantworten:</span>
+                        
+                        <label class="choice-label">
+                            <input type="checkbox" name="mrsa_risiko[]" value="mrsa_kontakt"> Ich hatte in den letzten Monaten Kontakt zu MRSA-Trägern
+                        </label>
+                        <label class="choice-label">
+                            <input type="checkbox" name="mrsa_risiko[]" value="dialyse"> dialysepflichtig
+                        </label>
+                        <label class="choice-label">
+                            <input type="checkbox" name="mrsa_risiko[]" value="dialyse_katheter"> dialysepflichtig mit Katheter
+                        </label>
+                        <label class="choice-label">
+                            <input type="checkbox" name="mrsa_risiko[]" value="brandverletzung"> Brandverletzung
+                        </label>
+                        <label class="choice-label">
+                            <input type="checkbox" name="mrsa_risiko[]" value="offene_wunde"> offene Wunde, chronisch
+                        </label>
+                        <label class="choice-label">
+                            <input type="checkbox" name="mrsa_risiko[]" value="schweinemast"> Arbeit im Schweinemastbetrieb
+                        </label>
+                        <label class="choice-label">
+                            <input type="checkbox" name="mrsa_risiko[]" value="katheter_sonde"> Luftröhren-Kanüle (Tracheostoma), Magensonde(PEG-Anlage), Port, Katheter o.ä.
+                        </label>
+                    </div>
+
+                    <div class="topic-section">
+                        <p class="topic-title">Wie sind Sie auf unsere Klinik aufmerksam geworden?</p>
+                        
+                        <label class="choice-label">
+                            <input type="checkbox" name="herkunft[]" value="freunde"> Freunde / Bekannte
+                        </label> 
+                        <label class="choice-label">
+                            <input type="checkbox" name="herkunft[]" value="arzt"> Empfehlung vom Arzt / Therapeuten
+                        </label> 
+                        <label class="choice-label">
+                            <input type="checkbox" name="herkunft[]" value="infotag"> Patienteninformationstag
+                        </label> 
+                        <label class="choice-label">
+                            <input type="checkbox" name="herkunft[]" value="zeitung"> Zeitungen und Zeitschriften
+                        </label> 
+                        <label class="choice-label">
+                            <input type="checkbox" name="herkunft[]" value="tv_radio"> Fernsehen / Radio 
+                        </label> 
+                        <label class="choice-label">
+                            <input type="checkbox" name="herkunft[]" value="internet"> Internetsuche
+                        </label>
+                        <label class="choice-label">
+                            <input type="checkbox" name="herkunft[]" value="facebook"> Facebook
+                        </label>
+                        <label class="choice-label">
+                            <input type="checkbox" name="herkunft[]" value="instagram"> Instagram
+                        </label>
+                        <label class="choice-label">
+                            <input type="checkbox" name="herkunft[]" value="sonstiges"> Sonstiges
+                        </label>
+                    </div>
+
+                    <div class="dsgvo-box">
+                        <label style="color: var(--primary); margin-bottom: 12px;">Datenschutz-Einwilligung *</label>
+                        <label class="choice-label" style="border: none; padding: 0; background: transparent;">
+                            <input type="checkbox" id="dsgvo_consent" name="dsgvo_consent" required>
+                            <span style="font-size: 18px; line-height: 1.5;">
+                                Ich willige ausdrücklich ein, dass die Klinik am Steigerwald meine hier angegebenen <strong>medizinischen und persönlichen Daten</strong> zum Zweck der Prüfung einer Klinikaufnahme verarbeiten darf. Diese Einwilligung kann ich jederzeit mit Wirkung für die Zukunft widerrufen. Es gilt die <a href="https://www.tcmklinik.de/datenschutz" target="_blank" rel="noopener" style="color: var(--primary); font-weight: bold;">Datenschutzerklärung</a> der Klinik.
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="button" class="btn-back" id="prevBtn" style="visibility: hidden;">‹ Zurück</button>
+                    <button type="button" class="btn-next" id="nextBtn">Weiter ›</button>
+                    <button type="submit" class="btn-submit" id="submitBtn" style="display: none;">Anfrage jetzt sicher absenden</button>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="video-sidebar">
+            <div class="video-sticky-box">
+                <h3>Video-Anleitung zum Ausfüllen</h3>
+                <p class="video-help-text">In dieser Bildschirmaufnahme führt Sie unsere Aufnahmeärztin Schritt für Schritt durch das Formular.</p>
                 
-                <label class="choice-label">
-                    <input type="checkbox" name="herkunft[]" value="freunde"> Freunde / Bekannte
-                </label> 
-                <label class="choice-label">
-                    <input type="checkbox" name="herkunft[]" value="arzt"> Empfehlung vom Arzt / Therapeuten
-                </label> 
-                <label class="choice-label">
-                    <input type="checkbox" name="herkunft[]" value="infotag"> Patienteninformationstag
-                </label> 
-                <label class="choice-label">
-                    <input type="checkbox" name="herkunft[]" value="zeitung"> Zeitungen und Zeitschriften
-                </label> 
-                <label class="choice-label">
-                    <input type="checkbox" name="herkunft[]" value="tv_radio"> Fernsehen / Radio 
-                </label> 
-                <label class="choice-label">
-                    <input type="checkbox" name="herkunft[]" value="internet"> Internetsuche
-                </label>
-                <label class="choice-label">
-                    <input type="checkbox" name="herkunft[]" value="facebook"> Facebook
-                </label>
-                <label class="choice-label">
-                    <input type="checkbox" name="herkunft[]" value="instagram"> Instagram
-                </label>
-                <label class="choice-label">
-                    <input type="checkbox" name="herkunft[]" value="sonstiges"> Sonstiges
-                </label>
-            </div>
-
-            <div class="dsgvo-box">
-                <label style="color: var(--primary); margin-bottom: 12px;">Datenschutz-Einwilligung *</label>
-                <label class="choice-label" style="border: none; padding: 0; background: transparent;">
-                    <input type="checkbox" id="dsgvo_consent" name="dsgvo_consent" required>
-                    <span style="font-size: 18px; line-height: 1.5;">
-                        Ich willige ausdrücklich ein, dass die Klinik am Steigerwald meine hier angegebenen <strong>medizinischen und persönlichen Daten</strong> zum Zweck der Prüfung einer Klinikaufnahme verarbeiten darf. Diese Einwilligung kann ich jederzeit mit Wirkung für die Zukunft widerrufen. Es gilt die <a href="https://www.tcmklinik.de/datenschutz" target="_blank" rel="noopener" style="color: var(--primary); font-weight: bold;">Datenschutzerklärung</a> der Klinik.
-                    </span>
-                </label>
+                <div class="video-responsive-container">
+                    <video controls width="100%">
+                        <source src="anleitung.mp4" type="video/mp4">
+                        Ihr Browser unterstützt keine Videos.
+                    </video>
+                </div>
             </div>
         </div>
 
-        <div class="button-row">
-            <button type="button" class="btn-back" id="prevBtn" style="visibility: hidden;">‹ Zurück</button>
-            <button type="button" class="btn-next" id="nextBtn">Weiter ›</button>
-            <button type="submit" class="btn-submit" id="submitBtn" style="display: none;">Anfrage jetzt sicher absenden</button>
-        </div>
-
-    </form>
-</div>
+    </div> </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
