@@ -454,15 +454,10 @@
                     <legend>3. Medizinische Gründe</legend>
                     
                     <div class="topic-section">
-                        <p class="topic-title">Ich habe folgende Diagnose/n:</p>
+                        <p class="topic-title" style="color: var(--text-color); margin-bottom: 12px;">Ich habe folgende Diagnose/n:</p>
                         
-                        <div class="form-row" style="font-weight: bold; font-size: 16px; color: var(--primary); margin-bottom: 5px;">
-                            <div class="col-main">Diagnosen</div>
-                            <div class="col-side">seit</div>
-                        </div>
-
                         <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="diagnose_1" placeholder="Diagnose 1"></div>
+                            <div class="col-main"><input type="text" class="list-input" name="diagnose_1"></div>
                             <div class="col-side"><input type="text" class="list-input" name="diagnose_1_seit"></div>
                         </div>
                         <div class="form-row">
@@ -477,41 +472,33 @@
                             <div class="col-main"><input type="text" class="list-input" name="diagnose_4"></div>
                             <div class="col-side"><input type="text" class="list-input" name="diagnose_4_seit"></div>
                         </div>
-                    </div>
 
-                    <div class="topic-section">
-                        <p class="topic-title">Ich möchte mich vor allem wegen folgender Beschwerden behandeln lassen:</p>
-                        <span class="topic-subtitle">(z.B. Schwindel, Schmerzen, Schlaflosigkeit, Nahrungsmittelunverträglichkeit...)</span>
-                        
-                        <div class="form-row" style="font-weight: bold; font-size: 16px; color: var(--primary); margin-bottom: 5px;">
-                            <div class="col-main">Beschwerden</div>
-                            <div class="col-side">seit</div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_1" required placeholder="Hauptbeschwerde *"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_1_seit" required placeholder="z.B. 3 Monaten *"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_2"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_2_seit"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_3"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_3_seit"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-main"><input type="text" class="list-input" name="beschwerde_4"></div>
-                            <div class="col-side"><input type="text" class="list-input" name="beschwerde_4_seit"></div>
+                        <div style="margin-top: 15px;">
+                            <label class="choice-label" style="margin-bottom: 0;">
+                                <input type="checkbox" name="schwanger" value="ja"> Ich bin schwanger
+                            </label>
                         </div>
                     </div>
 
                     <div class="topic-section">
-                        <p class="topic-title">Weitere Beschwerden</p>
+                        <p style="font-size: 16px; color: #333; margin-top: 0; margin-bottom: 15px;">
+                            Ich möchte mich vor allem wegen folgender Beschwerden behandeln lassen (z.B. Schwindel, Schmerzen, Schlaflosigkeit, Nahrungsmittelunverträglichkeit ...):
+                        </p>
                         
-                        <div class="form-row" style="font-weight: bold; font-size: 16px; color: var(--primary); margin-bottom: 5px;">
-                            <div class="col-main">Weitere Beschwerden</div>
-                            <div class="col-side">seit</div>
+                        <div class="form-row">
+                            <div class="col-side" style="padding-top: 10px;">
+                                <strong style="color: var(--primary); font-size: 20px;">Beschwerden *</strong>
+                            </div>
+                            <div class="col-main">
+                                <textarea id="hauptbeschwerden" name="hauptbeschwerden" rows="5" required placeholder="Ihre Hauptbeschwerden..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="topic-section">
+                        <div class="form-row" style="font-weight: bold; font-size: 18px; margin-bottom: 5px;">
+                            <div class="col-main" style="color: var(--primary);">Weitere Beschwerden</div>
+                            <div class="col-side" style="color: var(--primary);">seit</div>
                         </div>
 
                         <div class="form-row">
@@ -531,11 +518,47 @@
                             <div class="col-side"><input type="text" class="list-input" name="weitere_beschwerde_4_seit"></div>
                         </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label class="choice-label">
-                            <input type="checkbox" name="schwanger" value="ja"> Ich bin schwanger
-                        </label>
+
+                    <div class="topic-section">
+                        <div class="form-row" style="font-weight: bold; font-size: 18px; margin-bottom: 5px;">
+                            <div class="col-main" style="color: var(--primary);">Ich nehme folgende Medikamente (z.B.: Hormone, Abführmittel ...)</div>
+                            <div class="col-side" style="color: var(--primary);">seit</div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_1"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_1_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_2"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_2_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_3"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_3_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_4"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_4_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_5"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_5_seit"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-main"><input type="text" class="list-input" name="medikament_6"></div>
+                            <div class="col-side"><input type="text" class="list-input" name="medikament_6_seit"></div>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <label>Rauchen Sie?</label>
+                            <label class="choice-label">
+                                <input type="radio" name="rauchen" value="nein" checked> Nein
+                            </label>
+                            <label class="choice-label">
+                                <input type="radio" name="rauchen" value="ja"> Ja
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -548,11 +571,11 @@
                         
                         <div class="form-row">
                             <div class="col-main">
-                                <textarea id="medikamente" name="medikamente" rows="5" placeholder="Name und Dosierung der Medikamente..."></textarea>
+                                <textarea id="medikamente_aktuell" name="medikamente_aktuell" rows="5" placeholder="Name und Dosierung der Medikamente..."></textarea>
                             </div>
                             <div class="col-side">
                                 <label style="font-size: 16px; margin-bottom: 5px; font-weight: bold;">seit:</label>
-                                <textarea id="medikamente_seit" name="medikamente_seit" rows="5" placeholder="Z.B. 3 Monaten..."></textarea>
+                                <textarea id="medikamente_aktuell_seit" name="medikamente_aktuell_seit" rows="5" placeholder="Z.B. 3 Monaten..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -583,16 +606,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label>Rauchen Sie?</label>
-                        <label class="choice-label">
-                            <input type="radio" name="rauchen" value="nein" checked> Nein
-                        </label>
-                        <label class="choice-label">
-                            <input type="radio" name="rauchen" value="ja"> Ja
-                        </label>
-                    </div>
                 </div>
 
                 <div class="form-step" data-step="5">
@@ -614,33 +627,15 @@
                     <div class="topic-section">
                         <p class="topic-title" style="color: var(--text-color);">Wie sind Sie auf unsere Klinik aufmerksam geworden?</p>
                         
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="freunde"> Freunde / Bekannte
-                        </label> 
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="arzt"> Empfehlung vom Arzt / Therapeuten
-                        </label> 
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="infotag"> Patienteninformationstag
-                        </label> 
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="zeitung"> Zeitungen und Zeitschriften
-                        </label> 
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="tv_radio"> Fernsehen / Radio 
-                        </label> 
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="internet"> Internetsuche
-                        </label>
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="facebook"> Facebook
-                        </label>
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="instagram"> Instagram
-                        </label>
-                        <label class="choice-label">
-                            <input type="checkbox" name="herkunft[]" value="sonstiges"> Sonstiges
-                        </label>
+                        <label class="choice-label"><input type="checkbox" name="herkunft[]" value="freunde"> Freunde / Bekannte</label> 
+                        <label class="choice-label"><input type="checkbox" name="herkunft[]" value="arzt"> Empfehlung vom Arzt / Therapeuten</label> 
+                        <label class="choice-label"><input type="checkbox" name="herkunft[]" value="infotag"> Patienteninformationstag</label> 
+                        <label class="choice-label"><input type="checkbox" name="herkunft[]" value="zeitung"> Zeitungen und Zeitschriften</label> 
+                        <label class="choice-label"><input type="checkbox" name="herkunft[]" value="tv_radio"> Fernsehen / Radio</label> 
+                        <label class="choice-label"><input type="checkbox" name="herkunft[]" value="internet"> Internetsuche</label>
+                        <label class="choice-label"><input type="checkbox" name="herkunft[]" value="facebook"> Facebook</label>
+                        <label class="choice-label"><input type="checkbox" name="herkunft[]" value="instagram"> Instagram</label>
+                        <label class="choice-label"><input type="checkbox" name="herkunft[]" value="sonstiges"> Sonstiges</label>
                     </div>
 
                     <div class="dsgvo-box">
