@@ -40,60 +40,66 @@
             border-top: 8px solid var(--primary);
         }
 
-        /* --- SIDE-BY-SIDE LAYOUT (50% Formular / 50% Video) --- */
-        .main-layout-wrapper {
-            display: flex;
-            gap: 50px;
-            align-items: flex-start;
-        }
+        /* --- STICKY-VIDEO LAYOUT --- */
+.main-layout-wrapper {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr; /* 62% Formular / 38% Video */
+    gap: 40px;
+    align-items: flex-start;
+}
 
-        .form-content-side {
-            flex: 1;
-            min-width: 0;
-        }
+.video-sidebar {
+    min-width: 0; /* Verhindert das Schrumpfen */
+}
 
-        .video-sidebar {
-            flex: 1;
-            min-width: 0;
-        }
+/* Der fixierte Container beim Scrollen */
+.video-sticky-box {
+    position: sticky;
+    top: 30px; /* Abstand zum oberen Bildschirmrand beim Scrollen */
+    background: #f9f9f9;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
 
-        .video-sticky-box {
-            position: sticky;
-            top: 20px;
-            background: #f9f9f9;
-            padding: 24px;
-            border-radius: 12px;
-            border: 1px solid #e0e0e0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-        }
+.video-sticky-box h3 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #B5162B; /* Primärfarbe */
+    margin-bottom: 10px;
+}
 
-        .video-sticky-box h3 {
-            margin-top: 0;
-            font-size: 22px;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
+.video-help-text {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
 
-        .video-help-text {
-            font-size: 16px;
-            color: #555;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
+.video-responsive-container {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    background: #000;
+}
 
-        .video-responsive-container {
-            width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            background: #000;
-        }
+.video-responsive-container video {
+    display: block;
+    width: 100%;
+    height: auto;
+}
 
-        .video-responsive-container video {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
+/* Deaktiviert Sticky auf Smartphones/Tablets für bessere Usability */
+@media (max-width: 1150px) {
+    .main-layout-wrapper {
+        grid-template-columns: 1fr;
+    }
+    .video-sticky-box {
+        position: static;
+    }
+}
 
         /* --- LOGO & STRUKTUR --- */
         .logo-wrapper {
@@ -684,18 +690,18 @@
         </div>
 
         <div class="video-sidebar">
-            <div class="video-sticky-box">
-                <h3>Video-Anleitung zum Ausfüllen</h3>
-                <p class="video-help-text">In dieser Bildschirmaufnahme führt Sie unsere Aufnahmeärztin Schritt für Schritt durch das Formular.</p>
-                
-                <div class="video-responsive-container">
-                    <video controls width="100%">
-                        <source src="anleitung.mp4" type="video/mp4">
-                        Ihr Browser unterstützt keine Videos.
-                    </video>
-                </div>
-            </div>
+    <div class="video-sticky-box">
+        <h3>Video-Anleitung zum Ausfüllen</h3>
+        <p class="video-help-text">In dieser Bildschirmaufnahme führt Sie unsere Aufnahmeärztin Schritt für Schritt durch das Formular.</p>
+        
+        <div class="video-responsive-container">
+            <video controls width="100%">
+                <source src="anleitung.mp4" type="video/mp4">
+                Ihr Browser unterstützt keine Videos.
+            </video>
         </div>
+    </div>
+</div>
 
     </div> 
 </div>
