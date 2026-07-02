@@ -40,7 +40,7 @@
             border-top: 8px solid var(--primary);
         }
 
-        /* --- SIDE-BY-SIDE LAYOUT (50% Formular / 50% Video) --- */
+        /* --- SIDE-BY-SIDE LAYOUT (Formular / Video) --- */
         .main-layout-wrapper {
             display: flex;
             gap: 50px;
@@ -169,7 +169,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Spalten-Eingaben für die Zeilenlisten */
+        /* Standard-Formularreihen für Inputs */
         .form-row {
             display: flex;
             gap: 15px;
@@ -182,6 +182,25 @@
 
         .form-row .col-side {
             flex: 1;
+        }
+
+        /* --- STABILES GRID FÜR ZWEISPALtige TEXTAREAS --- */
+        .grid-textarea-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .grid-textarea-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .grid-textarea-col label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
 
         legend {
@@ -245,6 +264,7 @@
             font-size: 20px;
             color: var(--text-color);
             background-color: #fff;
+            resize: vertical;
         }
 
         /* Spezifische flachere Inputs für die Tabellen-Listen */
@@ -348,6 +368,10 @@
             }
             .video-sticky-box {
                 position: static;
+            }
+            .grid-textarea-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
             }
         }
     </style>
@@ -485,11 +509,11 @@
                             Ich möchte mich vor allem wegen folgender Beschwerden behandeln lassen (z.B. Schwindel, Schmerzen, Schlaflosigkeit, Nahrungsmittelunverträglichkeit ...):
                         </p>
                         
-                        <div class="form-row">
-                            <div class="col-side" style="padding-top: 10px;">
+                        <div class="grid-textarea-row">
+                            <div style="padding-top: 10px;">
                                 <strong style="color: var(--primary); font-size: 20px;">Beschwerden *</strong>
                             </div>
-                            <div class="col-main">
+                            <div>
                                 <textarea id="hauptbeschwerden" name="hauptbeschwerden" rows="5" required placeholder="Ihre Hauptbeschwerden..."></textarea>
                             </div>
                         </div>
@@ -569,12 +593,12 @@
                         <p class="topic-title">Welche Medikamente nehmen Sie aktuell ein?</p>
                         <span class="topic-subtitle">Bitte listen Sie Name und Dosierung auf. Falls keine: "Keine".</span>
                         
-                        <div class="form-row">
-                            <div class="col-main">
+                        <div class="grid-textarea-row">
+                            <div class="grid-textarea-col">
                                 <textarea id="medikamente_aktuell" name="medikamente_aktuell" rows="5" placeholder="Name und Dosierung der Medikamente..."></textarea>
                             </div>
-                            <div class="col-side">
-                                <label style="font-size: 16px; margin-bottom: 5px; font-weight: bold;">seit:</label>
+                            <div class="grid-textarea-col">
+                                <label for="medikamente_aktuell_seit">seit:</label>
                                 <textarea id="medikamente_aktuell_seit" name="medikamente_aktuell_seit" rows="5" placeholder="Z.B. 3 Monaten..."></textarea>
                             </div>
                         </div>
@@ -584,24 +608,24 @@
                         <p class="topic-title">Bisherige stationäre Aufenthalte, Operationen, Therapien</p>
                         <span class="topic-subtitle">Bitte listen Sie diese kurz auf. Falls keine: "Keine".</span>
                         
-                        <div class="form-row">
-                            <div class="col-main">
+                        <div class="grid-textarea-row">
+                            <div class="grid-textarea-col">
                                 <textarea id="vorbehandlungen" name="vorbehandlungen" rows="5"></textarea>
                             </div>
-                            <div class="col-side">
-                                <label style="font-size: 16px; margin-bottom: 5px; font-weight: bold;">Zeitraum:</label>
-                                <textarea id="vorbehandlungen_zeitraum" name="vorbehandlungen_zeitraum" rows="5" placeholder="Z.B. 2022-2024"></textarea>
+                            <div class="grid-textarea-col">
+                                <label for="vorbehandlungen_zeitraum">Zeitraum:</label>
+                                <textarea id="vorbehandlungen_zeitraum" name="vorbehandlungen_zeitraum" rows="5" placeholder="Z.B. 2022–2024"></textarea>
                             </div>
                         </div>
 
-                        <div class="form-row" style="margin-top: 20px;">
-                            <div class="col-main">
+                        <div class="grid-textarea-row" style="margin-top: 20px;">
+                            <div class="grid-textarea-col">
                                 <label class="choice-label" style="margin-bottom: 0; height: 100%;">
                                     <input type="checkbox" name="intensivstation" value="ja"> davon Intensivstation
                                 </label>
                             </div>
-                            <div class="col-side">
-                                <label style="font-size: 16px; margin-bottom: 5px; font-weight: bold;">Zeitraum/Dauer:</label>
+                            <div class="grid-textarea-col">
+                                <label for="intensiv_zeitraum">Zeitraum/Dauer:</label>
                                 <textarea id="intensiv_zeitraum" name="intensiv_zeitraum" rows="2" placeholder="Z.B. 3 Tage"></textarea>
                             </div>
                         </div>
