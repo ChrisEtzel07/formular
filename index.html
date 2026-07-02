@@ -121,15 +121,31 @@
             display: flex;
             gap: 20px;
             margin-bottom: 0;
+            align-items: stretch; /* Dehnt die Spalten auf die gleiche Höhe */
         }
 
         .form-row .col {
             flex: 1;
+            display: flex;
+            flex-direction: column; /* Erlaubt die vertikale Ausrichtung der Elemente im Inneren */
         }
 
         /* Die "seit:" bzw. "Zeitraum:" Spalten erhalten 35% der Breite */
         .form-row .col-short {
             flex: 0 0 35%;
+        }
+
+        /* Die eigentlichen Eingabefelder und Choice-Labels rutschen nach unten,
+           damit sie trotz ungleich langer Beschriftungen perfekt bündig abschließen */
+        .form-row .col textarea,
+        .form-row .col input,
+        .form-row .col .choice-label {
+            margin-top: auto;
+        }
+
+        /* Fix für die Intensivstation-Reihe: Verhindert doppelten Abstand nach unten */
+        .form-row .col .choice-label {
+            margin-bottom: 0;
         }
 
         legend {
@@ -276,6 +292,11 @@
             }
             .form-row .col-short {
                 flex: 1;
+            }
+            .form-row .col textarea,
+            .form-row .col input,
+            .form-row .col .choice-label {
+                margin-top: 0; /* Verhindert fehlerhafte Abstände auf Mobilgeräten */
             }
         }
     </style>
@@ -427,7 +448,7 @@
             </div>
 
             <div class="form-row">
-                <div class="form-group col" style="display: flex; align-items: flex-start; padding-top: 35px;">
+                <div class="form-group col">
                     <label class="choice-label" style="width: 100%;">
                         <input type="checkbox" name="intensivstation" value="ja"> davon Intensivstation
                     </label>
